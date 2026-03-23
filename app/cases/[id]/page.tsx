@@ -126,16 +126,9 @@ const cases: Case[] = [
 ]
 
 export default function CaseDetails() {
-  const params = useParams()
+  const params = useParams<{ id: string }>()
   const router = useRouter()
-  const [caseData, setCaseData] = useState<Case | null>(null)
-
-  useEffect(() => {
-    const foundCase = cases.find((c) => c.id === params.id)
-    if (foundCase) {
-      setCaseData(foundCase)
-    }
-  }, [params.id])
+  const caseData = cases.find((item) => item.id === params.id) ?? null
 
   if (!caseData) {
     return <div>Case not found</div>
@@ -311,4 +304,3 @@ export default function CaseDetails() {
     </div>
   )
 }
-

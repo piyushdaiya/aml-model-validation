@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { logError } from "@/lib/logger"
 
 interface UseFetchResult<T> {
@@ -15,7 +15,7 @@ export function useFetch<T>(url: string): UseFetchResult<T> {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
@@ -33,11 +33,11 @@ export function useFetch<T>(url: string): UseFetchResult<T> {
     } finally {
       setLoading(false)
     }
-  }
+  }, [url])
 
   useEffect(() => {
-    fetchData()
-  }, [url]) //Fixed dependency
+    void fetchData()
+  }, [fetchData])
 
   const mutate = async () => {
     await fetchData()
@@ -45,4 +45,3 @@ export function useFetch<T>(url: string): UseFetchResult<T> {
 
   return { data, error, loading, mutate }
 }
-

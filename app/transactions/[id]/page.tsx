@@ -2,7 +2,7 @@
 
 import { Checkbox } from "@/components/ui/checkbox"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import {
   ArrowLeft,
@@ -11,7 +11,7 @@ import {
   Copy,
   AlertTriangle,
   FileText,
-  Image,
+  Image as ImageIcon,
   Database,
   ExternalLink,
   History,
@@ -232,16 +232,9 @@ const rules: Rule[] = [
 ]
 
 export default function TransactionDetails() {
-  const params = useParams()
+  const params = useParams<{ id: string }>()
   const router = useRouter()
-  const [transaction, setTransaction] = useState<Transaction | null>(null)
-
-  useEffect(() => {
-    const foundTransaction = transactions.find((t) => t.id === params.id)
-    if (foundTransaction) {
-      setTransaction(foundTransaction)
-    }
-  }, [params.id])
+  const transaction = transactions.find((item) => item.id === params.id) ?? null
 
   if (!transaction) {
     return <div>Transaction not found</div>
@@ -577,7 +570,7 @@ export default function TransactionDetails() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Image className="h-5 w-5" />
+                  <ImageIcon className="h-5 w-5" />
                   Travel Rule Details
                 </CardTitle>
               </CardHeader>
@@ -855,4 +848,3 @@ export default function TransactionDetails() {
     </div>
   )
 }
-

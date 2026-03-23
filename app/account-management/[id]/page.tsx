@@ -1,6 +1,5 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { ArrowLeft, HelpCircle, Bell, User, Users, Wallet, ArrowUpDown } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -68,18 +67,10 @@ const transactions: { [key: string]: Transaction[] } = {
 }
 
 export default function AccountDetails() {
-  const params = useParams()
+  const params = useParams<{ id: string }>()
   const router = useRouter()
-  const [account, setAccount] = useState<Account | null>(null)
-  const [accountTransactions, setAccountTransactions] = useState<Transaction[]>([])
-
-  useEffect(() => {
-    const foundAccount = accounts.find((a) => a.id === params.id)
-    if (foundAccount) {
-      setAccount(foundAccount)
-      setAccountTransactions(transactions[foundAccount.id] || [])
-    }
-  }, [params.id])
+  const account = accounts.find((item) => item.id === params.id) ?? null
+  const accountTransactions = account ? transactions[account.id] || [] : []
 
   if (!account) {
     return <div>Account not found</div>
@@ -212,4 +203,3 @@ export default function AccountDetails() {
     </div>
   )
 }
-
