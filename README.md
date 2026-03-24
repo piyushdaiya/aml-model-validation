@@ -53,6 +53,14 @@ The demo is protected by login. After startup, open:
 
 Once authenticated, the app routes to the shared stakeholder demo shell starting from `/dashboard`.
 
+## Demo Video
+
+[![Demo Video Preview](./public/demo/demo-preview.gif)](./public/demo/demo-walkthrough.mp4)
+
+Download or open the short demo video here:
+
+- [demo-walkthrough.mp4](./public/demo/demo-walkthrough.mp4)
+
 ## Install And Run The Demo
 
 Two run modes are supported.
