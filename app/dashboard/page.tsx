@@ -7,7 +7,7 @@ export default function DashboardPage() {
   return (
     <DemoShell
       title="Executive Dashboard"
-      description="Presentation-ready view of the consulting accelerator across the current client engagement, with clear evidence of rigorous validation methodology and a credible path to a full product build."
+      description="Presentation-ready view of the consulting accelerator across the current client engagement, now showing both traditional AML model validation and GenAI workflow validation in one reusable workbench."
       actions={<DashboardHeaderActions />}
     >
       <DashboardRenderer />

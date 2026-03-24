@@ -17,13 +17,15 @@ export function ModelInventoryTable({
     <Table>
       <TableHeader>
         <TableRow className="hover:bg-transparent">
-          <TableHead>Model</TableHead>
-          <TableHead>Type</TableHead>
+          <TableHead>Inventory Item</TableHead>
+          <TableHead>Validation Type</TableHead>
           <TableHead>Owner</TableHead>
           <TableHead>Stage</TableHead>
           <TableHead>Risk</TableHead>
+          <TableHead>Human Review</TableHead>
+          <TableHead>Grounding</TableHead>
+          <TableHead>Prompt Set Update</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Readout</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -33,19 +35,25 @@ export function ModelInventoryTable({
             <TableCell>
               <div>
                 <p className="font-medium text-slate-900">{model.name}</p>
-                <p className="text-xs text-slate-500">v{model.version}</p>
+                <p className="text-xs text-slate-500">
+                  {model.id.toUpperCase()} • v{model.version}
+                </p>
               </div>
             </TableCell>
-            <TableCell>{model.type}</TableCell>
+            <TableCell>{model.validationType}</TableCell>
             <TableCell>{model.owner}</TableCell>
             <TableCell>{model.stage}</TableCell>
             <TableCell>
               <StatusChip label={model.riskLevel} kind="risk" />
             </TableCell>
+            <TableCell>{model.humanReviewRequirement}</TableCell>
+            <TableCell>
+              <StatusChip label={model.groundingStatus} />
+            </TableCell>
+            <TableCell>{model.lastPromptSetUpdate}</TableCell>
             <TableCell>
               <StatusChip label={model.status} kind="model" />
             </TableCell>
-            <TableCell>{model.nextReadoutDate}</TableCell>
             <TableCell className="text-right">
               <div className="flex justify-end gap-2">
                 <Button variant="outline" size="sm" onClick={() => onPreview(model)}>

@@ -18,6 +18,8 @@ export function FindingsTable({
         <TableRow className="hover:bg-transparent">
           <TableHead>ID</TableHead>
           <TableHead>Issue</TableHead>
+          <TableHead>Track</TableHead>
+          <TableHead>Validation Type</TableHead>
           <TableHead>Stream</TableHead>
           <TableHead>Severity</TableHead>
           <TableHead>Status</TableHead>
@@ -29,10 +31,7 @@ export function FindingsTable({
         {findings.map((finding) => (
           <TableRow
             key={finding.id}
-            className={cn(
-              "cursor-pointer",
-              selectedFindingId === finding.id ? "bg-slate-100/80" : ""
-            )}
+            className={cn("cursor-pointer", selectedFindingId === finding.id ? "bg-slate-100/80" : "")}
             onClick={() => onSelect?.(finding)}
           >
             <TableCell className="font-medium text-slate-700">{finding.id}</TableCell>
@@ -42,6 +41,8 @@ export function FindingsTable({
                 <p className="text-xs text-slate-500">{finding.summary}</p>
               </div>
             </TableCell>
+            <TableCell>{finding.track}</TableCell>
+            <TableCell>{finding.validationType}</TableCell>
             <TableCell>{finding.stream}</TableCell>
             <TableCell>
               <StatusChip label={finding.severity} kind="risk" />

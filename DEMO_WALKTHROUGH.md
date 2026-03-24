@@ -2,20 +2,21 @@
 
 ## Purpose
 
-This document provides a practical walkthrough for presenting the **AML Model Validation Workbench Demo** to consulting leadership, practice leads, client-facing teams, and other internal decision-makers.
+This document provides a practical walkthrough for presenting the **AML Model Validation Workbench Demo** to consulting leadership, practice leads, client-facing teams, and internal decision-makers.
 
-The goal of the walkthrough is to help reviewers understand:
+The goal is to show that one reusable consulting workbench can support:
 
-- why this demo matters for a consulting-led AML model validation practice
-- what business problem it is trying to solve
-- how the demo supports multiple stakeholder perspectives
-- why the firm should approve a larger product/application effort
+- traditional AML model validation
+- GenAI-assisted AML workflow validation in AML operations
+- multi-client delivery with a consistent methodology
+- persona-aware stakeholder views
+- a credible path to a larger product/application effort
 
 This is a **phase-1 consulting accelerator demo**. It is not yet a production platform.
 
 ---
 
-## Recommended audience
+## Recommended Audience
 
 This walkthrough is best used with:
 
@@ -28,22 +29,22 @@ This walkthrough is best used with:
 
 ---
 
-## Demo objective
+## Demo Objective
 
-The primary objective is to show that the firm can evolve from ad hoc AML model validation delivery into a **repeatable, scalable, productized workbench**.
+The primary objective is to show that the firm can evolve from ad hoc AML validation delivery into a **repeatable, scalable, productized workbench**.
 
-The walkthrough should make the following points clear:
+The walkthrough should make these points clear:
 
 1. the consulting firm can support multiple client engagements with a common validation structure
-2. the workbench can present governance, testing, findings, and reporting in a consistent way
-3. the experience can be tailored for different stakeholder personas without requiring a full production build on day one
-4. the UI suggests a credible path to a full AML Model Validation product/application
+2. the same workbench can cover both traditional AML models and GenAI workflows
+3. governance, testing, findings, and reporting can be presented consistently across both tracks
+4. the experience can be tailored for different stakeholder personas without requiring a separate dashboard or separate GenAI product area
 
 ---
 
-## Pre-demo setup checklist
+## Pre-Demo Setup Checklist
 
-Before starting the walkthrough, confirm the following:
+Before starting the walkthrough, confirm:
 
 - the application is running locally or in the target demo environment
 - if using Docker, `docker compose up --build` has completed successfully
@@ -52,22 +53,22 @@ Before starting the walkthrough, confirm the following:
 - the dashboard loads cleanly
 - persona switching is working
 - cross-navigation between dashboard, models, testing, findings, and reports works
-- the selected client engagement has enough mock data to support a full walkthrough
+- the selected client engagement has enough mock data for both traditional-model and GenAI-workflow examples
 
-If possible, start the demo on the **Compliance Officer** or **Risk Manager** persona, since those two views typically resonate most quickly with decision-makers.
-
-Because the demo is auth-protected, the practical entry route for live walkthroughs is usually:
+Because the demo is auth-protected, the practical entry route is usually:
 
 - `/login`
 - or `/register` if a fresh local demo user is needed
 
+If possible, start on **Compliance Officer** or **Risk Manager**.
+
 ---
 
-## Recommended storyline
+## Recommended Storyline
 
 Use this framing at the beginning:
 
-> "This demo shows what a consulting-firm AML Model Validation Workbench could look like as a reusable accelerator across client engagements. It helps us move from fragmented delivery artifacts toward a more consistent validation operating model, with role-aware views, auditable evidence, and a clear path to a larger product build."
+> "This demo shows what a consulting-firm AML validation workbench could look like as a reusable accelerator across client engagements. The key point is that the same shared workbench can validate both traditional AML models and GenAI-assisted AML workflows, with role-aware views, auditable evidence, and a clear path to a larger product build."
 
 Keep the discussion focused on:
 
@@ -79,326 +80,297 @@ Keep the discussion focused on:
 
 ---
 
-## Suggested walkthrough order
+## Suggested Walkthrough Order
 
-### 1. Start at the Executive Dashboard
+### 1. Start At The Executive Dashboard
 
 **Route:** `/dashboard`
 
 #### What to say
 
-- "This dashboard gives consulting leadership and engagement teams a portfolio-level view of active AML model validation work."
-- "It is designed to show not only model status, but also where the consulting team needs to focus attention."
-- "The dashboard can shift emphasis depending on the persona viewing it, while still using the same underlying data and application shell."
-- "We intentionally kept one shared dashboard route rather than building separate dashboards, so the persona story is composition-driven and easier to evolve into a full product."
+- "This dashboard gives consulting leadership and engagement teams a portfolio-level view of active AML validation work."
+- "It now shows both traditional AML model signals and GenAI workflow-control signals in one place."
+- "The dashboard shifts emphasis by persona, but stays on one shared route and one shared shell."
 
 #### What to point out
 
 - KPI strip
 - persona-specific widget order
+- AI Workflow Validation Status widget
 - persona-specific CTA changes
 - persona-specific insight banner text
-- validation, findings, milestone, and remediation visibility
-- recent activity / governance events with persona-specific emphasis
-- persona switcher and client selector
+- recent activity with persona-specific emphasis
+- client selector and persona switcher
 
 #### What business message it supports
 
 - leadership visibility
 - multi-client scalability
 - consulting-practice oversight
+- one workbench for multiple validation tracks
 
 #### Good transition line
 
-> "From here, we can move from portfolio view into the actual models under validation."
+> "From here, we can move from portfolio view into the shared validation inventory."
 
 ---
 
-### 2. Move to Model Inventory
+### 2. Move To Validation Inventory
 
 **Route:** `/models`
 
 #### What to say
 
-- "This is the model inventory view for active client engagements."
-- "It gives the consulting team a structured way to manage validation scope, ownership, stage, and review readiness across multiple models."
-- "This is important because scalable consulting delivery depends on consistent inventory and governance hygiene, not just analytical outputs."
+- "This route stays `/models`, but it now acts as the shared validation inventory."
+- "It covers transaction monitoring, customer risk, sanctions screening, and GenAI workflows without fragmenting the experience."
 
 #### What to point out
 
-- model table
-- filters by client, owner, stage, and risk
-- validation stage and review dates
+- inventory table
+- filters by client, validation type, owner, stage, and risk
+- validation type column
+- human review requirement
+- grounding status
+- last prompt-set update
 - quick preview drawer
-- overall rating / findings signals
+
+#### Suggested demo move
+
+- first point out a traditional model row
+- then point out a GenAI workflow row such as `GAI-001 Alert Narrative Assistant`
+- explain that the same inventory structure can support both
 
 #### What business message it supports
 
 - repeatable delivery methodology
 - governance discipline
-- portfolio management across clients
+- shared operating model across traditional and GenAI validation scope
 
 #### Good transition line
 
-> "Let’s open one model and show how the actual validation workspace is structured."
+> "Let’s open one traditional item first, then a GenAI workflow, and show how the same detail route adapts."
 
 ---
 
-### 3. Open a Model Detail / Validation Workspace
+### 3. Open Model Detail / Validation Workspace
 
 **Route:** `/models/[modelId]`
 
 #### What to say
 
-- "This is the core validation workspace for a single model."
-- "The purpose is to bring together conceptual soundness, data quality, performance, testing evidence, findings, and audit trail in one structured view."
-- "For a consulting practice, this is where delivery rigor becomes visible and repeatable."
+- "This remains one shared detail route."
+- "Traditional AML models keep the current validation experience."
+- "GenAI workflows use the same shell but render a different tab structure that reflects workflow boundaries, grounding, response quality, safety, and human-review controls."
 
-#### What to point out
+#### What to point out for a traditional item
 
-- sticky model summary band
-- Overview tab
-- Data Validation tab
-- Performance tab
-- Testing tab
-- Findings tab
-- Audit Trail tab
-- notes / actions panel
+- sticky top summary band
+- Overview
+- Data Validation
+- Performance
+- Testing
+- Findings
+- Audit Trail
 
-#### Suggested tab narrative
+#### What to point out for a GenAI item
 
-**Overview**
-- methodology
-- assumptions
-- limitations
-- governance timeline
-- revalidation triggers
+- Overview
+- Data & Grounding
+- Response Quality
+- Safety & Controls
+- Testing
+- Findings
+- Audit Trail
 
-**Data Validation**
-- completeness
-- schema / benchmark variance
-- source integrity
-- field exceptions
+#### GenAI-specific talking points
 
-**Performance**
-- precision
-- recall
-- ROC-AUC
-- false positive rate
-- sensitivity / baseline comparison
-
-**Findings / Audit Trail**
-- visible evidence of consulting-quality documentation
-- explain that this is where reviewers and client teams can align on what is supported, what is unresolved, and what requires remediation
+- workflow purpose
+- approved usage boundaries
+- prohibited actions
+- human-in-the-loop role
+- provider/model information
+- prompt/version history
+- grounding coverage and source freshness
+- factuality, completeness, citation coverage, and consistency
+- hallucination rate, refusal quality, escalation behavior, and sensitive-data handling
 
 #### What business message it supports
 
+- one shared workbench, not two disconnected products
 - methodological credibility
-- evidence-driven consulting delivery
-- future product viability
+- future product viability for both traditional and GenAI validation
 
 #### Good transition line
 
-> "Now let’s show how the workbench makes independent testing and challenge more tangible."
+> "Now let’s show how testing works when the same lab supports both traditional scenarios and GenAI prompt/control scenarios."
 
 ---
 
-### 4. Open the Testing Lab
+### 4. Open The Testing Lab
 
 **Route:** `/testing`
 
 #### What to say
 
-- "The Testing Lab makes the validation methodology more concrete."
-- "Instead of treating validation as static documentation, it shows scenario-based challenge and testing in a way that is easier for stakeholders to understand."
-- "This is especially important for demonstrating the consulting practice’s rigor."
+- "The Testing Lab remains one route, but now supports two kinds of validation."
+- "For traditional models, it shows threshold and scenario-based testing."
+- "For GenAI workflows, it shows prompt-driven scenario testing, retrieved evidence, answer comparison, and validator notes."
 
-#### What to point out
+#### What to point out for traditional models
 
-- scenario selector
+- sensitivity, stress, ATL, BTL, and adversarial scenarios
 - threshold controls
-- pass/fail outcomes
-- scenario results visualization
-- evidence / reproducibility card
-- observations and recommendations
+- result visuals
+- pass/fail summary
+- evidence and reproducibility cards
 
-#### Example talking points
+#### What to point out for GenAI workflows
 
-- above-the-line vs below-the-line testing
-- threshold sensitivity
-- stress scenarios
-- adversarial scenarios
-- benchmark comparison
+- grounded Q&A
+- hallucination trap
+- missing-context test
+- prompt-injection / instruction-conflict test
+- policy-conflict test
+- unsafe recommendation test
+- stale-guidance test
+- adversarial investigator prompt
+- prompt
+- retrieved evidence
+- model answer
+- expected answer
+- pass/fail
+- validator notes
 
 #### What business message it supports
 
 - independent challenge capability
 - repeatable validation testing framework
-- strong differentiation for the consulting practice
+- strong consulting differentiation for GenAI control validation
 
 #### Good transition line
 
-> "Testing is useful, but stakeholders also need to see how those results become business action."
+> "Testing is useful, but stakeholders also need to see how these results become business action."
 
 ---
 
-### 5. Move to Findings & Remediation
+### 5. Move To Findings & Remediation
 
 **Route:** `/findings`
 
 #### What to say
 
-- "This is where the workbench translates validation outcomes into action-oriented consulting recommendations."
-- "The goal is not just to identify issues, but to prioritize them, assign ownership, and support remediation tracking."
+- "This remains one shared findings page."
+- "You can view traditional-model findings, GenAI-workflow findings, or a combined engagement view."
+- "That matters because leadership usually wants one remediation conversation, not separate operating silos."
 
 #### What to point out
 
+- track filter
 - severity / likelihood heatmap
+- findings register
+- finding detail panel
 - remediation board
-- findings table
-- detail drawer with business impact and recommendation
+
+#### GenAI-specific examples to mention
+
+- unsupported recommendation language
+- incomplete citation grounding
+- inconsistent escalation behavior
+- prompt version not approved
+- stale policy references
+- sensitive-data redaction gap
 
 #### What business message it supports
 
 - consulting value beyond pure analytics
 - governance closure and accountability
-- stronger client delivery story
+- a coherent remediation story across both validation tracks
 
 #### Good transition line
 
-> "Finally, let’s show how the workbench supports delivery-ready reporting and evidence packaging."
+> "Finally, let’s show how the workbench supports delivery-ready reporting and audit-friendly packaging."
 
 ---
 
-### 6. End with the Report Preview / Audit Pack
+### 6. End With The Report Preview / Audit Pack
 
 **Route:** `/reports/[modelId]`
 
 #### What to say
 
-- "This report preview shows how validation work can be assembled into a regulator- and auditor-friendly deliverable."
-- "Even though phase 1 uses mock data and mock export actions, the structure is designed to resemble the type of evidence-backed package a consulting team would want to deliver."
+- "This report route is still shared."
+- "Traditional models keep the familiar validation-pack structure."
+- "GenAI workflows add a dedicated GenAI Workflow Validation section inside the same reporting surface."
 
-#### What to point out
+#### What to point out for GenAI items
 
-- report outline
-- executive summary section
-- methodology section
-- data validation section
-- testing results section
-- findings and remediation section
-- audit trail / appendix concepts
-- export panel / evidence checklist
+- intended use
+- workflow boundaries
+- grounding architecture
+- response quality testing
+- safety and control testing
+- human review controls
+- deployment recommendation
+- residual risks
 
 #### What business message it supports
 
 - consulting deliverable quality
 - audit readiness
-- path to monetizable productization
+- a path to monetizable productization across both traditional and GenAI validation work
 
 #### Suggested close
 
-> "The point of this demo is not that every backend capability already exists. The point is that we now have a credible front-end workbench concept for a reusable AML model validation practice accelerator, with a clear path to a larger product effort."
+> "The point of this demo is not that every backend capability already exists. The point is that we now have a credible shared workbench concept for a reusable AML validation practice accelerator that can cover both traditional models and GenAI-assisted workflows, with a clear path to a larger product effort."
 
 ---
 
-## Persona-specific emphasis during the walkthrough
+## Persona-Specific Emphasis During The Walkthrough
 
 ### Compliance Officer
 Focus on:
-- findings severity
+
+- high-risk findings
+- high-risk AI findings
 - remediation due dates
-- evidence-pack readiness
-- revalidation triggers
-- governance actions
-- OCC-aligned brief CTA
+- grounding coverage
+- human-review controls
+- auditability and evidence-pack readiness
 
 ### Risk Manager
 Focus on:
+
 - risk heatmap
 - performance drift
-- threshold sensitivity
-- stress / adversarial scenarios
-- material weaknesses
+- failed scenarios
+- unsafe recommendation risk
+- hallucination or prompt-control failures
+- remediation priorities
 
 ### Model Owner
 Focus on:
-- assigned models
+
+- assigned validation items
 - documentation gaps
-- pending approvals
-- required evidence
-- owner actions
-- notes and governance comments
+- workflow boundaries
+- prompt/version updates
+- milestones and response actions
 
 ### Validator
 Focus on:
+
 - testing queue
+- expected-versus-actual answer review
+- grounding failures
+- data-quality exceptions
 - evidence completeness
-- data quality issues
-- calibration history
-- reproducibility mindset
-- external source integrity
 
 ### Admin
 Focus on:
-- client coverage
-- engagement count
-- model inventory scale
-- support/configuration readiness
-- demo setup and manageability
-- ability to switch persona and client context without leaving the shared shell
 
----
-
-## What to avoid over-emphasizing
-
-For this phase, avoid spending too much time on:
-
-- missing backend workflows
-- real API integration gaps
-- incomplete RBAC enforcement
-- lack of live report generation
-- production operational details
-
-Instead, keep the conversation focused on:
-
-- the consulting workflow
-- the user experience
-- the operating model
-- the future product roadmap
-
----
-
-## Expected questions and suggested responses
-
-### "Is this production-ready?"
-Suggested answer:
-- "Not yet. This is a phase-1 consulting accelerator demo designed to validate the operating model, UI narrative, and product direction before a larger investment."
-
-### "What is real versus mocked?"
-Suggested answer:
-- "The current phase is UI-first and uses synthetic data and mock actions, while preserving future seams for real APIs, orchestration, reporting, and access control."
-
-### "Why invest further?"
-Suggested answer:
-- "Because the workbench demonstrates a repeatable client-delivery pattern that could reduce fragmentation, improve evidence quality, and strengthen the consulting practice’s ability to scale AML model validation engagements."
-
-### "Can this support multiple clients?"
-Suggested answer:
-- "That is one of the core design goals. The demo is framed as a consulting-firm workbench rather than a single-client internal tool."
-
----
-
-## Suggested closing summary
-
-Use a short closing like this:
-
-> "This demo shows that we can present AML model validation as a structured consulting workbench rather than a collection of disconnected artifacts. It gives us a credible story for portfolio oversight, validation rigor, stakeholder-specific views, and delivery-ready reporting. The next step would be to decide whether to invest in turning this accelerator into a fuller product/application for the AML practice."
-
----
-
-## Related documents
-
-- [README.md](./README.md)
-- [PERSONAS_DEMO_GUIDE.md](./PERSONAS_DEMO_GUIDE.md)
-- [UPGRADE_NOTES_2026.md](./UPGRADE_NOTES_2026.md)
+- client portfolio
+- validation-item coverage
+- GenAI workflow count in scope
+- configuration changes
+- support issues
+- overall demo health
