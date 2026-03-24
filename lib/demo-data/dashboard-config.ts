@@ -7,6 +7,11 @@ export type DashboardKpiId =
   | "EvidencePacksReadyKpi"
   | "ModelsNearReviewDateKpi"
   | "AuditTrailExceptionsKpi"
+  | "GenAIWorkflowsInScopeKpi"
+  | "HighRiskAiFindingsKpi"
+  | "PromptTestScenariosFailedKpi"
+  | "GroundingCoverageKpi"
+  | "HumanReviewExceptionsKpi"
   | "MaterialRiskIssuesKpi"
   | "PerformanceDriftKpi"
   | "FailedScenarioKpi"
@@ -33,6 +38,7 @@ export type DashboardKpiId =
   | "ConfigChangesKpi"
 
 export type DashboardWidgetId =
+  | "AIWorkflowValidationStatusWidget"
   | "FindingsSeverityWidget"
   | "RemediationTimelineWidget"
   | "RevalidationTriggerWatchlist"
@@ -94,13 +100,15 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
   "compliance-officer": {
     kpis: [
       "HighRiskFindingsKpi",
+      "HighRiskAiFindingsKpi",
       "OverdueRemediationsKpi",
       "RevalidationTriggersKpi",
-      "EvidencePacksReadyKpi",
-      "ModelsNearReviewDateKpi",
+      "GroundingCoverageKpi",
+      "HumanReviewExceptionsKpi",
       "AuditTrailExceptionsKpi",
     ],
     topWidgets: [
+      "AIWorkflowValidationStatusWidget",
       "FindingsSeverityWidget",
       "RemediationTimelineWidget",
       "RevalidationTriggerWatchlist",
@@ -124,21 +132,23 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
     ],
     insightBanner: {
       eyebrow: "Compliance posture",
-      title: "The current engagement is positioned for audit-friendly oversight.",
+      title: "The current engagement is positioned for audit-friendly oversight across both traditional models and GenAI workflows.",
       description:
-        "Use this view to demonstrate how the accelerator highlights overdue remediation, revalidation triggers, and evidence-pack readiness without losing the regulator-facing narrative.",
+        "Use this view to demonstrate how the accelerator highlights overdue remediation, grounding coverage, human-review controls, and revalidation triggers without losing the regulator-facing narrative.",
     },
   },
   "risk-manager": {
     kpis: [
       "MaterialRiskIssuesKpi",
+      "HighRiskAiFindingsKpi",
       "PerformanceDriftKpi",
       "FailedScenarioKpi",
+      "PromptTestScenariosFailedKpi",
       "ThresholdExceptionsKpi",
       "OpenRemediationsKpi",
-      "BenchmarkGapsKpi",
     ],
     topWidgets: [
+      "AIWorkflowValidationStatusWidget",
       "RiskHeatmapWidget",
       "PerformanceTrendWidget",
       "ScenarioFailureWidget",
@@ -161,21 +171,23 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
     ],
     insightBanner: {
       eyebrow: "Risk exposure",
-      title: "Material model risk is concentrated in scenario stability, drift, and unresolved remediation.",
+      title: "Material risk is now concentrated across both model performance and GenAI workflow control stability.",
       description:
-        "This composition keeps failed scenarios, benchmark gaps, and threshold exceptions at the center so leadership can prioritize the next decisions with a risk-first lens.",
+        "This composition keeps failed scenarios, high-risk AI findings, and threshold or prompt-control exceptions at the center so leadership can prioritize the next decisions with a risk-first lens.",
     },
   },
   "model-owner": {
     kpis: [
       "AssignedModelsKpi",
+      "GenAIWorkflowsInScopeKpi",
       "PendingDocumentationKpi",
       "AssignedActionsKpi",
       "ApprovalMilestonesKpi",
       "ValidationResponseItemsKpi",
-      "TrainingTasksKpi",
+      "GroundingCoverageKpi",
     ],
     topWidgets: [
+      "AIWorkflowValidationStatusWidget",
       "AssignedModelsWidget",
       "DocumentationChecklistWidget",
       "MilestonesWidget",
@@ -198,9 +210,9 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
     ],
     insightBanner: {
       eyebrow: "Owner execution",
-      title: "The next approval outcome depends on documentation closure and timely owner responses.",
+      title: "The next approval outcome depends on documentation closure, prompt-version discipline, and timely owner responses.",
       description:
-        "This version of the shared dashboard shifts attention to assigned actions, milestone timing, and exactly what the model owner needs to prepare before governance review.",
+        "This version of the shared dashboard shifts attention to assigned actions, milestone timing, workflow boundaries, and exactly what the model owner needs to prepare before governance review.",
     },
   },
   validator: {
@@ -208,11 +220,13 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
       "PendingValidationReviewsKpi",
       "FailedTestRunsKpi",
       "DataQualityExceptionsKpi",
+      "PromptTestScenariosFailedKpi",
       "ExternalDataAlertsKpi",
-      "CalibrationChangesKpi",
       "EvidenceCompletenessKpi",
+      "GroundingCoverageKpi",
     ],
     topWidgets: [
+      "AIWorkflowValidationStatusWidget",
       "TestingQueueWidget",
       "DataQualityExceptionsWidget",
       "EvidenceCompletenessWidget",
@@ -236,15 +250,16 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
     ],
     insightBanner: {
       eyebrow: "Validation execution",
-      title: "Testing momentum is strongest when data exceptions, evidence gaps, and calibration changes stay visible together.",
+      title: "Testing momentum is strongest when data exceptions, grounding failures, and answer-quality gaps stay visible together.",
       description:
-        "The validator composition puts queue health, source integrity, and evidence completeness on one surface so the workbench clearly supports future orchestration and replay.",
+        "The validator composition puts queue health, source integrity, expected-versus-actual answer review, and evidence completeness on one surface so the workbench clearly supports future orchestration and replay.",
     },
   },
   admin: {
     kpis: [
       "ActiveClientEngagementsKpi",
       "ModelsInScopeKpi",
+      "GenAIWorkflowsInScopeKpi",
       "ActiveUsersKpi",
       "DemoHealthKpi",
       "SupportIssuesKpi",
@@ -253,6 +268,7 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
     topWidgets: [
       "ClientPortfolioWidget",
       "ModelStatusOverviewWidget",
+      "AIWorkflowValidationStatusWidget",
       "DemoSystemActivityWidget",
     ],
     bottomWidgets: [
@@ -274,9 +290,9 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
     ],
     insightBanner: {
       eyebrow: "Portfolio operations",
-      title: "The same demo shell can scale into a multi-client operating surface with lightweight admin controls.",
+      title: "The same demo shell can scale into a multi-client operating surface covering both AML models and GenAI workflows.",
       description:
-        "For internal leadership, this view demonstrates portfolio coverage, configuration visibility, and support monitoring without requiring a separate admin dashboard build.",
+        "For internal leadership, this view demonstrates portfolio coverage, provider and prompt-config visibility, and support monitoring without requiring a separate admin dashboard build.",
     },
   },
 }

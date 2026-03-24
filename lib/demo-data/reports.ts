@@ -3,6 +3,7 @@ import type { ReportPack } from "@/lib/demo-data/types"
 export const reportPacks: ReportPack[] = [
   {
     modelId: "cash-velocity-v32",
+    track: "Traditional AML Model",
     title: "Northstar Bank | Cash Structuring Velocity Monitor | Validation Audit Pack",
     reportOwner: "A. Patel",
     exportFormats: ["PowerPoint", "PDF", "Evidence ZIP"],
@@ -53,6 +54,7 @@ export const reportPacks: ReportPack[] = [
   },
   {
     modelId: "customer-risk-v5",
+    track: "Traditional AML Model",
     title: "Harbor Credit Union | Customer Risk Rating Engine | Validation Pack",
     reportOwner: "M. Donovan",
     exportFormats: ["PowerPoint", "Word", "PDF"],
@@ -89,6 +91,7 @@ export const reportPacks: ReportPack[] = [
   },
   {
     modelId: "watchlist-fuzzy-match-v9",
+    track: "Traditional AML Model",
     title: "Atlas Private Bank | Watchlist Fuzzy Match Resolver | Escalation Pack",
     reportOwner: "S. Ibrahim",
     exportFormats: ["PowerPoint", "PDF", "Evidence ZIP"],
@@ -113,6 +116,161 @@ export const reportPacks: ReportPack[] = [
         status: "Under Review",
         narrative:
           "Evidence persistence controls must be hardened before the workbench can support a full internal-audit or regulator replay standard.",
+      },
+    ],
+  },
+  {
+    modelId: "gai-001-alert-narrative-assistant",
+    track: "GenAI Workflow",
+    title: "Northstar Bank | GAI-001 Alert Narrative Assistant | Validation Pack",
+    reportOwner: "A. Patel",
+    exportFormats: ["PowerPoint", "PDF", "Evidence ZIP"],
+    sections: [
+      {
+        id: "executive",
+        title: "Executive Summary",
+        status: "Ready",
+        narrative:
+          "This report frames the GenAI assistant as a reusable investigator-support workflow with strong productivity upside but material recommendation-boundary controls still in flight.",
+      },
+      {
+        id: "genai-validation",
+        title: "GenAI Workflow Validation",
+        status: "Under Review",
+        narrative:
+          "The validation package assesses intended use, workflow boundaries, grounding architecture, response quality, safety controls, human review controls, deployment recommendation, and residual risks.",
+      },
+      {
+        id: "testing",
+        title: "Response Quality & Safety Testing",
+        status: "Under Review",
+        narrative:
+          "Grounded replay outcomes are promising, but hallucination traps and instruction-conflict prompts still surface unsupported recommendation language.",
+      },
+      {
+        id: "findings",
+        title: "Findings & Remediation",
+        status: "Drafted",
+        narrative:
+          "Remediation is focused on citation enforcement, recommendation-boundary hardening, and clearer refusal patterns before any client pilot expansion.",
+      },
+      {
+        id: "audit",
+        title: "Audit Trail",
+        status: "Ready",
+        narrative:
+          "Prompt versions, retrieved evidence, test scenarios, and reviewer assumptions are indexed to support replay and governance review.",
+      },
+    ],
+  },
+  {
+    modelId: "gai-002-case-summarization-assistant",
+    track: "GenAI Workflow",
+    title: "Harbor Credit Union | GAI-002 AML Case Summarization Assistant | Validation Pack",
+    reportOwner: "M. Donovan",
+    exportFormats: ["PowerPoint", "PDF", "Word"],
+    sections: [
+      {
+        id: "executive",
+        title: "Executive Summary",
+        status: "Ready",
+        narrative:
+          "This workflow demonstrates a credible GenAI use case for AML operations, with disciplined grounding and human-review controls already visible in the accelerator.",
+      },
+      {
+        id: "genai-validation",
+        title: "GenAI Workflow Validation",
+        status: "Ready",
+        narrative:
+          "Intended use, approved boundaries, grounding architecture, response-quality testing, safety controls, and human-review design are documented in a client-ready structure.",
+      },
+      {
+        id: "testing",
+        title: "Response Quality Testing",
+        status: "Under Review",
+        narrative:
+          "The summarization assistant performs strongly on chronology fidelity and reviewer usefulness, with only minor long-form citation gaps remaining.",
+      },
+      {
+        id: "residual-risk",
+        title: "Residual Risks & Recommendation",
+        status: "Drafted",
+        narrative:
+          "Residual risks are limited to citation completeness for long chronology outputs, making this a candidate for controlled deployment with active prompt governance.",
+      },
+    ],
+  },
+  {
+    modelId: "gai-003-policy-copilot",
+    track: "GenAI Workflow",
+    title: "Summit Payments | GAI-003 AML Policy Copilot | Validation Pack",
+    reportOwner: "J. Holmes",
+    exportFormats: ["PowerPoint", "PDF"],
+    sections: [
+      {
+        id: "executive",
+        title: "Executive Summary",
+        status: "Ready",
+        narrative:
+          "The policy copilot shows the consulting accelerator can evaluate GenAI operations workflows, but stale-guidance and escalation weaknesses still limit deployment readiness.",
+      },
+      {
+        id: "genai-validation",
+        title: "GenAI Workflow Validation",
+        status: "Under Review",
+        narrative:
+          "The report covers intended use, workflow boundaries, grounding architecture, response quality, safety testing, human review controls, and deployment recommendation.",
+      },
+      {
+        id: "grounding",
+        title: "Grounding Architecture & Freshness",
+        status: "Under Review",
+        narrative:
+          "The main blocker is source freshness: procedure updates do not propagate reliably enough for safe production policy Q&A.",
+      },
+      {
+        id: "findings",
+        title: "Findings & Deployment Recommendation",
+        status: "Drafted",
+        narrative:
+          "Deployment should remain tightly limited until stale-policy handling and conflict-driven escalation controls are remediated and retested.",
+      },
+    ],
+  },
+  {
+    modelId: "gai-004-disposition-recommendation-assistant",
+    track: "GenAI Workflow",
+    title: "Atlas Private Bank | GAI-004 Disposition Recommendation Assistant | Escalation Pack",
+    reportOwner: "S. Ibrahim",
+    exportFormats: ["PowerPoint", "PDF", "Evidence ZIP"],
+    sections: [
+      {
+        id: "executive",
+        title: "Executive Escalation Note",
+        status: "Ready",
+        narrative:
+          "This pack positions the workflow as an escalated GenAI validation case due to unsafe recommendation behavior, prompt-version control gaps, and sensitive-data redaction risk.",
+      },
+      {
+        id: "genai-validation",
+        title: "GenAI Workflow Validation",
+        status: "Ready",
+        narrative:
+          "The validation narrative documents intended use, human review boundaries, grounding weaknesses, response-quality performance, safety-control failures, and residual deployment risk.",
+      },
+      {
+        id: "safety",
+        title: "Safety & Control Testing",
+        status: "Under Review",
+        narrative:
+          "Unsafe recommendation prompts and adversarial investigator prompts still produce unacceptable outputs for an operations setting.",
+      },
+      {
+        id: "audit",
+        title: "Audit Trail & Control Evidence",
+        status: "Under Review",
+        narrative:
+          "Prompt-version control evidence, redaction regression packs, and reviewer replay annotations remain incomplete and are central to the escalation story.",
       },
     ],
   },

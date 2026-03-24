@@ -194,41 +194,41 @@ async function main() {
     {
       file: "02-dashboard-compliance.png",
       route: "/dashboard",
-      waitFor: "Review Compliance Posture",
+      waitFor: "AI Workflow Validation Status",
       state: {
         selectedClientId: "northstar-bank",
         personaId: "compliance-officer",
-        selectedModelId: "cash-velocity-v32",
+        selectedModelId: "gai-001-alert-narrative-assistant",
       },
     },
     {
       file: "03-dashboard-risk.png",
-      route: "/dashboard",
-      waitFor: "Review Risk Exposure",
+      route: "/models",
+      waitFor: "Validation Inventory",
       state: {
-        selectedClientId: "atlas-private-bank",
-        personaId: "risk-manager",
-        selectedModelId: "watchlist-fuzzy-match-v9",
+        selectedClientId: "northstar-bank",
+        personaId: "model-owner",
+        selectedModelId: "gai-001-alert-narrative-assistant",
       },
     },
     {
       file: "04-models-owner.png",
-      route: "/models",
-      waitFor: "Model Inventory",
+      route: "/models/gai-001-alert-narrative-assistant",
+      waitFor: "GenAI Workflow Overview",
       state: {
-        selectedClientId: "harbor-credit",
-        personaId: "model-owner",
-        selectedModelId: "customer-risk-v5",
+        selectedClientId: "northstar-bank",
+        personaId: "validator",
+        selectedModelId: "gai-001-alert-narrative-assistant",
       },
     },
     {
       file: "05-testing-validator.png",
       route: "/testing",
-      waitFor: "Testing Lab",
+      waitFor: "Prompt / Control Panel",
       state: {
-        selectedClientId: "summit-payments",
+        selectedClientId: "atlas-private-bank",
         personaId: "validator",
-        selectedModelId: "sanctions-screening-v14",
+        selectedModelId: "gai-004-disposition-recommendation-assistant",
       },
     },
     {
@@ -238,17 +238,17 @@ async function main() {
       state: {
         selectedClientId: "atlas-private-bank",
         personaId: "compliance-officer",
-        selectedModelId: "watchlist-fuzzy-match-v9",
+        selectedModelId: "gai-004-disposition-recommendation-assistant",
       },
     },
     {
       file: "07-report-preview.png",
-      route: "/reports/watchlist-fuzzy-match-v9",
+      route: "/reports/gai-004-disposition-recommendation-assistant",
       waitFor: "Report Preview / Audit Pack",
       state: {
         selectedClientId: "atlas-private-bank",
         personaId: "admin",
-        selectedModelId: "watchlist-fuzzy-match-v9",
+        selectedModelId: "gai-004-disposition-recommendation-assistant",
       },
     },
   ]

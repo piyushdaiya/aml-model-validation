@@ -11,51 +11,50 @@
 
 ## Overview
 
-This repository contains a **phase-1 stakeholder demo** for an **AML Model Validation Workbench** designed for a consulting company's AML model validation practice.
+This repository contains a consulting-quality stakeholder demo for an **AML Model Validation Workbench**.
 
-The purpose of this demo is to help consulting leadership, engagement leads, and client-facing teams evaluate a larger effort to build a full AML Model Validation product/application that can support repeatable delivery across multiple client engagements.
+The current demo is intentionally positioned as a **consulting accelerator**, not a bank’s internal production platform. It shows how one reusable workbench can support:
 
-This is intentionally positioned as a **consulting accelerator demo**, not yet as a bank's internal production platform.
+- traditional AML model validation
+- GenAI-assisted AML workflow validation used in AML operations
+- multi-client delivery by a consulting practice
+- persona-aware executive and working-level views
+- a clean path from mock-driven demo to full product build
 
 ## Current Demo Status
 
-- **Current status:** consulting-practice demo / phase-1 UI accelerator
+- **Current status:** consulting-practice demo / phase-1 workbench
 - **Original version:** 2025
 - **Refreshed:** 2026
 - **Framework:** Next.js App Router + TypeScript
 - **Database:** PostgreSQL via Prisma
-- **Access model in this phase:** login/register enabled, demo data elsewhere is mock-driven
+- **Access model in this phase:** login/register enabled, workbench data is primarily mock-driven
+- **Validation tracks in scope:**
+  - Traditional AML models
+  - GenAI-assisted AML workflows
 
-## Background
+## 2026 Refresh Highlights
 
-This solution was **originally created in 2025** and has been **updated recently for 2026** to better support current demo, development, and deployment expectations.
-
-### 2026 refresh highlights
-
-- **Updated libraries for 2026**
-  - dependency refresh and modernization work for a more current development baseline
-  - alignment work to reduce outdated or conflicting packages
-  - cleaner path for future UI and platform updates
-
-- **Docker-based local environment**
-  - Docker support for the **web application**
-  - Docker support for the **database**
-  - improved consistency for demos, onboarding, and local development
-
-These updates are intended to make the demo easier to run, easier to explain, and easier to evolve into a larger product effort.
+- dependency modernization for a stable current baseline
+- Docker-based local environment for both web app and database
+- persona-aware shared dashboard composition
+- one shared validation inventory, testing lab, findings surface, and report shell
+- dual-track demo support for traditional AML models and GenAI workflows
 
 ## Quick Start
 
-The demo is protected by login. After startup, open:
+The demo is auth-protected. After startup, begin at:
 
 - `/login` if you already have a user account
 - `/register` to create a local demo account
 
-Once authenticated, the app routes to the shared stakeholder demo shell starting from `/dashboard`.
+After authentication, the shared stakeholder demo shell starts at `/dashboard`.
 
 ## Demo Video
 
 [![Demo Video Preview](./public/demo/demo-preview.gif)](./public/demo/demo-walkthrough.mp4)
+
+The short walkthrough now shows the shared workbench moving through the GenAI-enabled validation track within the existing demo routes.
 
 Download or open the short demo video here:
 
@@ -65,9 +64,9 @@ Download or open the short demo video here:
 
 Two run modes are supported.
 
-### Option 1: Docker Compose (recommended for demos)
+### Option 1: Docker Compose
 
-This starts both:
+This is the recommended setup for demos because it starts both:
 
 - the Next.js web app
 - the PostgreSQL database
@@ -83,18 +82,15 @@ Default endpoints:
 - Web app: `http://localhost:3000`
 - Postgres: `localhost:5433`
 
-Notes:
-
-- Postgres is mapped to host port `5433` by default to avoid conflicts with an existing local Postgres on `5432`.
-- You can override ports if needed:
+Optional port overrides:
 
 ```bash
 WEB_PORT=3001 POSTGRES_PORT=5434 docker compose up --build
 ```
 
-### Option 2: Local npm run
+### Option 2: Local npm Run
 
-Use this if you want to run the app directly on your machine instead of inside Docker.
+Use this when running the app directly on your machine.
 
 #### Prerequisites
 
@@ -119,9 +115,7 @@ Then open:
 - `http://localhost:3000/login`
 - or `http://localhost:3000/register`
 
-### Production-style verification
-
-If you want to verify the app in a production-style mode outside Docker:
+### Production-Style Verification
 
 ```bash
 npm run build
@@ -130,12 +124,76 @@ npm run start
 
 ## Demo Login Flow
 
-This branch intentionally keeps **login and registration enabled** to show how the future application will work.
+This demo intentionally keeps **login and registration enabled** to show how a future productized application will work.
 
 Important distinction:
 
 - authentication and Prisma-backed user creation are real
-- the consulting dashboard, models, testing, findings, and reporting surfaces are still primarily mock-data driven in this phase
+- the consulting workbench surfaces are still primarily mock-data driven in this phase
+
+## Shared Route Structure
+
+The dual-track demo uses one shared route structure for both traditional AML models and GenAI workflows:
+
+- `/dashboard`
+- `/models`
+- `/models/[modelId]`
+- `/testing`
+- `/findings`
+- `/reports/[modelId]`
+
+There is no separate GenAI product area or `/ai-workflows` route.
+
+## What The Demo Is Meant To Show
+
+The demo emphasizes:
+
+- portfolio-level visibility across both AML models and GenAI workflows
+- a shared validation inventory with type-aware fields
+- believable traditional-model metrics such as precision, recall, ROC-AUC, and false positive rate
+- believable GenAI workflow controls such as grounding coverage, citation quality, hallucination risk, and human-review requirements
+- findings and remediation tracking across both validation tracks
+- report and audit-pack preview suitable for consulting delivery conversations
+- persona-aware dashboard emphasis for different stakeholder groups
+
+## What The Demo Is Not Yet
+
+This phase is not a full production system. It does not yet provide:
+
+- full RBAC enforcement
+- live backend orchestration for validation runs
+- real report generation pipelines
+- production workflow engines
+- actual client data integrations
+- provider-side GenAI evaluation services
+- complete audit or document management services
+
+The current phase uses mock/demo data and preserves clean seams for future API and platform integration.
+
+## Supported Demo Content
+
+The current synthetic data set includes:
+
+- 4 client engagements
+- traditional AML validation items across:
+  - transaction monitoring
+  - customer risk
+  - sanctions screening / watchlist
+- 4 GenAI workflow validation items:
+  - `GAI-001 Alert Narrative Assistant`
+  - `GAI-002 AML Case Summarization Assistant`
+  - `GAI-003 AML Policy Copilot`
+  - `GAI-004 Disposition Recommendation Assistant`
+- traditional testing scenarios such as sensitivity, stress, ATL, BTL, and adversarial scenarios
+- GenAI testing scenarios such as:
+  - grounded Q&A
+  - hallucination trap
+  - missing-context test
+  - prompt-injection / instruction-conflict test
+  - policy-conflict test
+  - unsafe recommendation test
+  - stale-guidance test
+  - adversarial investigator prompt
 
 ## Recommended First Demo Path
 
@@ -143,42 +201,54 @@ Important distinction:
 2. Sign in through `/login`.
 3. Land on `/dashboard`.
 4. Use the **Client Selector** and **Persona Switcher** in the shared shell.
-5. Walk through `/models`, `/testing`, `/findings`, and `/reports/[modelId]`.
+5. Show how the dashboard changes by persona.
+6. Move to `/models` and show the shared inventory across traditional models and GenAI workflows.
+7. Open one traditional item and one GenAI item from `/models/[modelId]`.
+8. Move through `/testing`, `/findings`, and `/reports/[modelId]`.
 
-## Demo Focus
+## Persona-Aware Experience
 
-This demo is focused on the **front-end experience and consulting workflow narrative**.
+The demo keeps a **single shared `/dashboard` route** and changes composition by persona instead of rendering separate dashboards.
 
-It is designed to answer the following questions for internal decision-makers:
+Current personas:
 
-- Can this become a reusable accelerator for the firm's AML model validation practice?
-- Can the consulting team show a repeatable validation methodology across multiple clients and models?
-- Can the experience support different stakeholder perspectives without requiring a full production build on day one?
-- Does the UI suggest a credible path toward a broader product/application investment?
+- Compliance Officer
+- Risk Manager
+- Model Owner
+- Validator
+- Admin
 
-## What the demo is meant to show
+Persona switching changes:
 
-The demo emphasizes:
+- KPI order
+- widget selection and order
+- CTA labels and links
+- activity feed emphasis
+- insight banner text
 
-- portfolio-level visibility for AML model validation work
-- a model inventory and governance-oriented operating view
-- believable data validation, performance evaluation, and testing results
-- findings and remediation tracking
-- audit/report preview suitable for consulting delivery conversations
-- persona-aware dashboard emphasis for different stakeholder groups
+The persona story now includes both traditional AML-model signals and GenAI workflow signals where relevant.
 
-## What the demo is not yet
+## Demo Narrative
 
-This phase is **not** a full production system. It does **not** yet aim to provide:
+The recommended walkthrough is:
 
-- full RBAC enforcement
-- live backend orchestration for model validation runs
-- real report generation pipelines
-- production-grade workflow engines
-- actual client data integrations
-- complete audit or document management services
+1. **Executive Dashboard**  
+   Show portfolio-level status for both traditional AML validation and GenAI workflow validation.
 
-The current phase uses **mock/demo data** and preserves clean seams for future API and platform integration.
+2. **Validation Inventory**  
+   Show the consulting firm’s shared view of in-scope validation items across clients.
+
+3. **Model Detail / Validation Workspace**  
+   Show that one detail route can support traditional tabs and GenAI-specific tabs without fragmenting the experience.
+
+4. **Testing Lab**  
+   Show both traditional scenario testing and GenAI prompt / control testing in the same lab.
+
+5. **Findings & Remediation**  
+   Show how traditional-model findings and GenAI-workflow findings are managed together.
+
+6. **Report Preview / Audit Pack**  
+   Show how traditional validation packs and GenAI workflow validation sections can be delivered from one shared reporting surface.
 
 ## Intended Audience
 
@@ -191,103 +261,8 @@ This demo is intended for:
 - compliance stakeholders
 - client sponsors and decision-makers
 
-## Demo Narrative
-
-The recommended walkthrough is:
-
-1. **Executive Dashboard**  
-   Show portfolio-level status for active AML validation engagements.
-
-2. **Model Inventory**  
-   Show the consulting firm's structured view of in-scope models across clients.
-
-3. **Model Detail / Validation Workspace**  
-   Show how a specific model is reviewed across governance, data validation, performance, testing, findings, and audit evidence.
-
-4. **Testing Lab**  
-   Show scenario-based validation rigor including threshold testing, sensitivity analysis, stress testing, and adversarial scenarios.
-
-5. **Findings & Remediation**  
-   Show how validation output is translated into action-oriented consulting recommendations.
-
-6. **Report Preview / Audit Pack**  
-   Show how consulting work can become a reusable regulator- and auditor-friendly deliverable.
-
-## Key Screens in the Phase-1 Demo
-
-- `/login`
-- `/register`
-- `/dashboard`
-- `/models`
-- `/models/[modelId]`
-- `/testing`
-- `/findings`
-- `/reports/[modelId]`
-
-## Persona-Aware Experience
-
-The demo is built so different personas can see different dashboard emphasis while sharing the same core app shell and underlying demo data.
-
-Current persona targets:
-
-- Compliance Officer
-- Risk Manager
-- Model Owner
-- Validator
-- Admin
-
-Each persona should see different KPI ordering, widget emphasis, calls to action, and activity feed prioritization.
-
-The current implementation keeps a **single shared `/dashboard` route** and changes composition by persona instead of rendering separate dashboards.
-
-## Demo Data Assumptions
-
-This demo uses synthetic but believable data such as:
-
-- multiple client engagements
-- AML models across transaction monitoring, customer risk, and sanctions/watchlist screening
-- performance metrics such as precision, recall, ROC-AUC, false positive rate
-- data-quality indicators such as completeness, drift, benchmark variance, and source freshness
-- findings with severity, likelihood, owner, due date, and recommendation
-- report sections aligned to conceptual soundness, testing, findings, remediation, and audit trail
-
 ## Related Documents
 
 - [Persona Demo Guide](./PERSONAS_DEMO_GUIDE.md)
 - [Demo Walkthrough](./DEMO_WALKTHROUGH.md)
 - [Upgrade Notes 2026](./UPGRADE_NOTES_2026.md)
-
-## Architecture / Delivery Notes
-
-This repository is currently optimized for **demo and development velocity**.
-
-### Current implementation posture
-
-- UI-first demo scope
-- mock-data driven experience
-- Prisma-backed auth/register flow
-- future API seams preserved in code structure
-- Docker support for app and database
-
-### Near-term evolution path
-
-Possible next phases include:
-
-- real API integration
-- actual validation workflow orchestration
-- role-aware access control
-- report generation/export services
-- persistent findings/remediation data
-- client onboarding and practice configuration features
-
-## Why this matters for a consulting practice
-
-A strong AML model validation practice needs more than analytical outputs. It also needs:
-
-- repeatable workflow
-- visible governance
-- evidence packaging
-- stakeholder-specific views
-- scalable delivery patterns across client engagements
-
-This demo is intended to show the shape of that capability before a larger engineering investment is approved.

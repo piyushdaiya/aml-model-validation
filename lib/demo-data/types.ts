@@ -38,10 +38,18 @@ export type EngagementStage =
   | "Review"
   | "Steering Committee"
 
-export type ModelType =
+export type TraditionalModelType =
   | "Transaction Monitoring"
   | "Customer Risk"
   | "Sanctions & Watchlist"
+
+export type ValidationType =
+  | "Transaction Monitoring Model"
+  | "Customer Risk Model"
+  | "Sanctions Screening Model"
+  | "GenAI Workflow"
+
+export type ValidationTrack = "Traditional AML Model" | "GenAI Workflow"
 
 export type ModelStage =
   | "Intake"
@@ -59,6 +67,10 @@ export type Severity = "Low" | "Moderate" | "High" | "Critical"
 
 export type Likelihood = "Rare" | "Possible" | "Likely" | "Severe"
 
+export type GroundingStatus = "Not Applicable" | "Strong" | "Partial" | "Limited" | "At Risk"
+
+export type HumanReviewRequirement = "Required" | "Escalation Only" | "Optional"
+
 export type ValidationStream =
   | "Conceptual Soundness"
   | "Data Validation"
@@ -66,6 +78,9 @@ export type ValidationStream =
   | "Testing"
   | "Governance"
   | "Reporting"
+  | "Data & Grounding"
+  | "Response Quality"
+  | "Safety & Controls"
 
 export type TestingScenarioKind =
   | "Sensitivity"
@@ -73,6 +88,14 @@ export type TestingScenarioKind =
   | "Adversarial"
   | "Above-the-Line"
   | "Below-the-Line"
+  | "Grounded Q&A"
+  | "Hallucination Trap"
+  | "Missing Context"
+  | "Prompt Injection"
+  | "Policy Conflict"
+  | "Unsafe Recommendation"
+  | "Stale Guidance"
+  | "Adversarial Investigator Prompt"
 
 export type TestResultStatus = "Pass" | "Watch" | "Fail"
 
@@ -85,6 +108,14 @@ export type FindingStatus =
 export type ExportFormat = "PowerPoint" | "PDF" | "Word" | "Evidence ZIP"
 
 export type MilestoneStatus = "Complete" | "In Progress" | "Pending"
+
+export type GenAIFindingType =
+  | "Unsupported Recommendation Language"
+  | "Incomplete Citation Grounding"
+  | "Inconsistent Escalation Behavior"
+  | "Prompt Version Not Approved"
+  | "Stale Policy References"
+  | "Sensitive-Data Redaction Gap"
 
 export interface DemoPersona {
   id: DemoPersonaId
@@ -118,11 +149,12 @@ export interface ModelMilestone {
   status: MilestoneStatus
 }
 
-export interface ValidationModel {
+export interface BaseValidationItem {
   id: string
   clientId: string
   name: string
-  type: ModelType
+  track: ValidationTrack
+  validationType: ValidationType
   owner: string
   stage: ModelStage
   status: ModelStatus
@@ -131,15 +163,83 @@ export interface ValidationModel {
   lastValidatedOn: string
   nextReadoutDate: string
   summary: string
-  methodologyNote: string
-  metrics: ModelMetrics
   progressPercent: number
   openFindings: number
-  atlCoverage: number
-  btlCoverage: number
   milestones: ModelMilestone[]
   tags: string[]
+  humanReviewRequirement: HumanReviewRequirement
+  groundingStatus: GroundingStatus
+  lastPromptSetUpdate: string
 }
+
+export interface TraditionalValidationModel extends BaseValidationItem {
+  track: "Traditional AML Model"
+  validationType:
+    | "Transaction Monitoring Model"
+    | "Customer Risk Model"
+    | "Sanctions Screening Model"
+  type: TraditionalModelType
+  methodologyNote: string
+  metrics: ModelMetrics
+  atlCoverage: number
+  btlCoverage: number
+}
+
+export interface PromptVersionHistoryEntry {
+  version: string
+  updatedAt: string
+  changeSummary: string
+  approvedBy: string
+}
+
+export interface GenAIResponseQualityMetrics {
+  factualityScore: number
+  completenessScore: number
+  citationCoverage: number
+  consistencyScore: number
+  investigatorUsefulnessScore: number
+}
+
+export interface GenAISafetyControlMetrics {
+  hallucinationRate: number
+  refusalQuality: string
+  escalationBehavior: string
+  sensitiveDataLeakageChecks: string
+  policyBoundaryCompliance: string
+}
+
+export interface GenAIValidationWorkflow extends BaseValidationItem {
+  track: "GenAI Workflow"
+  validationType: "GenAI Workflow"
+  type: "GenAI Workflow"
+  workflowCode: string
+  workflowPurpose: string
+  approvedUsageBoundaries: string[]
+  prohibitedActions: string[]
+  humanInLoopRole: string
+  providerModelName: string
+  providerInfo: string
+  promptPackVersion: string
+  promptVersionHistory: PromptVersionHistoryEntry[]
+  approvedDataSources: string[]
+  retrievalGroundingCoverage: number
+  sourceFreshness: string
+  citationGroundingQuality: string
+  accessControlAssumptions: string[]
+  responseQuality: GenAIResponseQualityMetrics
+  safetyControls: GenAISafetyControlMetrics
+  hallucinationRisk: RiskLevel
+  policyAdherence: string
+  citationAccuracy: number
+  escalationBehavior: string
+  privacyHandling: string
+  auditability: string
+  deploymentRecommendation: string
+  residualRisks: string[]
+}
+
+export type ValidationItem = TraditionalValidationModel | GenAIValidationWorkflow
+export type ValidationModel = ValidationItem
 
 export interface DataQualityCheck {
   name: string
@@ -169,21 +269,31 @@ export interface TestingScenario {
   reproducibilityScore: number
   observations: string[]
   evidenceIds: string[]
+  prompt?: string
+  retrievedEvidence?: string[]
+  modelAnswer?: string
+  expectedAnswer?: string
+  validatorNotes?: string
 }
 
 export interface TestingWorkspace {
   modelId: string
+  track: ValidationTrack
   dataChecks: DataQualityCheck[]
   thresholdControls: ThresholdControl[]
   scenarios: TestingScenario[]
   resultSeries: Array<{
     label: string
-    baselinePrecision: number
-    simulatedPrecision: number
-    baselineRecall: number
-    simulatedRecall: number
-    baselineAlerts: number
-    simulatedAlerts: number
+    baselinePrecision?: number
+    simulatedPrecision?: number
+    baselineRecall?: number
+    simulatedRecall?: number
+    baselineAlerts?: number
+    simulatedAlerts?: number
+    factuality?: number
+    completeness?: number
+    citationCoverage?: number
+    safety?: number
   }>
 }
 
@@ -200,6 +310,8 @@ export interface Finding {
   id: string
   clientId: string
   modelId: string
+  track: ValidationTrack
+  validationType: ValidationType
   title: string
   stream: ValidationStream
   severity: Severity
@@ -210,6 +322,7 @@ export interface Finding {
   recommendation: string
   summary: string
   evidenceIds: string[]
+  findingType?: GenAIFindingType
 }
 
 export interface ReportSection {
@@ -221,6 +334,7 @@ export interface ReportSection {
 
 export interface ReportPack {
   modelId: string
+  track: ValidationTrack
   title: string
   reportOwner: string
   exportFormats: ExportFormat[]
