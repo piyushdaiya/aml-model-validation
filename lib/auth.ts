@@ -20,7 +20,8 @@ export async function verifyAuth(req: NextRequest) {
 }
 
 export async function getSession() {
-  const token = cookies().get("token")?.value
+  const cookieStore = await cookies()
+  const token = cookieStore.get("token")?.value
 
   if (!token) {
     return null
@@ -37,4 +38,3 @@ export async function getSession() {
 export async function createToken(payload: any) {
   return await new SignJWT(payload).setProtectedHeader({ alg: "HS256" }).setExpirationTime("24h").sign(secret)
 }
-

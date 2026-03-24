@@ -125,16 +125,9 @@ const mlModels: MLModel[] = [
 ]
 
 export default function MLModelDetails() {
-  const params = useParams()
+  const params = useParams<{ id: string }>()
   const router = useRouter()
-  const [model, setModel] = useState<MLModel | null>(null)
-
-  useEffect(() => {
-    const foundModel = mlModels.find((m) => m.id === params.id)
-    if (foundModel) {
-      setModel(foundModel)
-    }
-  }, [params.id])
+  const model = mlModels.find((item) => item.id === params.id) ?? null
 
   if (!model) {
     return <div>Model not found</div>
@@ -318,4 +311,3 @@ export default function MLModelDetails() {
     </div>
   )
 }
-

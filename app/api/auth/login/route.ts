@@ -6,7 +6,13 @@ import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
   try {
-    const { username, password } = await req.json()
+    const body = await req.json()
+    const username = body?.username?.trim()
+    const password = body?.password
+
+    if (!username || !password) {
+      return NextResponse.json({ error: "Username and password are required" }, { status: 400 })
+    }
 
     const user = await prisma.user.findUnique({
       where: { username },
@@ -35,7 +41,9 @@ export async function POST(req: Request) {
       role: user.role,
     })
 
-    cookies().set("token", token, {
+    const cookieStore = await cookies()
+
+    cookieStore.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
@@ -55,4 +63,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "An error occurred during login" }, { status: 500 })
   }
 }
-

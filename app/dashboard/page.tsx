@@ -1,730 +1,184 @@
-"use client"
-import { ArrowLeft, HelpCircle, Bell } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ThemeToggle } from "../components/theme-toggle"
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  LineChart,
-  Line,
-} from "recharts"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+"use client";
 
-// Define riskClasses here
-const riskClasses = ["Very High", "High", "Medium", "Low"]
+import React, { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from "recharts";
+import { Download, AlertTriangle, CheckCircle2, Activity } from "lucide-react";
 
-// ... (keep the existing imports and color definitions)
-
-const colors = ["#FFB3BA", "#BAFFC9", "#BAE1FF", "#FFFFBA", "#FFD9BA", "#E5BAFF"]
-
-// ... (keep the existing chart components)
-
-const generateRandomData = (categories: string[], max: number) => {
-  return categories.map((category) => ({
-    name: category,
-    value: Math.floor(Math.random() * max) + 1,
-  }))
-}
-
-const PartiesByRiskClass = () => {
-  const data = generateRandomData(riskClasses, 100)
-  const customColors = ["#FFB3BA", "#BAFFC9", "#BAE1FF", "#FFFFBA"]
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <PieChart>
-        <Pie
-          data={data}
-          cx="50%"
-          cy="50%"
-          labelLine={false}
-          outerRadius={80}
-          fill="#8884d8"
-          dataKey="value"
-          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={customColors[index % customColors.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend />
-      </PieChart>
-    </ResponsiveContainer>
-  )
-}
-
-const AlertsByCaseChart = ({ title }: { title: string }) => {
-  const data = riskClasses.map((riskClass) => ({
-    name: riskClass,
-    Open: Math.floor(Math.random() * 50) + 1,
-    Closed: Math.floor(Math.random() * 50) + 1,
-  }))
-
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="Open" fill={colors[0]} />
-        <Bar dataKey="Closed" fill={colors[1]} />
-      </BarChart>
-    </ResponsiveContainer>
-  )
-}
-
-const SARsByRiskClass = () => {
-  const data = generateRandomData(riskClasses, 50)
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="value" fill={colors[2]} />
-      </BarChart>
-    </ResponsiveContainer>
-  )
-}
-
-const ModelPerformanceByRiskClass = () => {
-  const models = ["Model A", "Model B", "Model C"]
-  const data = riskClasses.map((riskClass) => {
-    const entry: any = { name: riskClass }
-    models.forEach((model) => {
-      entry[`${model} SAR Alerts`] = Math.floor(Math.random() * 30) + 1
-      entry[`${model} Effective Alerts`] = Math.floor(Math.random() * 50) + 1
-      entry[`${model} Ineffective Alerts`] = Math.floor(Math.random() * 20) + 1
-    })
-    return entry
-  })
-
-  return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        {models.map((model, index) => [
-          <Bar
-            key={`${model}-sar`}
-            dataKey={`${model} SAR Alerts`}
-            stackId={model}
-            fill={colors[index * 3]}
-            name={`${model} - SAR Alerts`}
-          />,
-          <Bar
-            key={`${model}-effective`}
-            dataKey={`${model} Effective Alerts`}
-            stackId={model}
-            fill={colors[index * 3 + 1]}
-            name={`${model} - Effective Alerts`}
-          />,
-          <Bar
-            key={`${model}-ineffective`}
-            dataKey={`${model} Ineffective Alerts`}
-            stackId={model}
-            fill={colors[index * 3 + 2]}
-            name={`${model} - Ineffective Alerts`}
-          />,
-        ])}
-      </BarChart>
-    </ResponsiveContainer>
-  )
-}
-
-// Update the RulePerformanceByRiskClass component
-const RulePerformanceByRiskClass = () => {
-  const data = riskClasses.map((riskClass) => ({
-    name: riskClass,
-    "SAR Alerts": Math.floor(Math.random() * 30) + 1,
-    "Effective Alerts": Math.floor(Math.random() * 50) + 1,
-    "Ineffective Alerts": Math.floor(Math.random() * 20) + 1,
-  }))
-
-  return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis label={{ value: "Alerts Count", angle: -90, position: "insideLeft" }} />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="SAR Alerts" stackId="a" fill={colors[0]} />
-        <Bar dataKey="Effective Alerts" stackId="a" fill={colors[1]} />
-        <Bar dataKey="Ineffective Alerts" stackId="a" fill={colors[2]} />
-      </BarChart>
-    </ResponsiveContainer>
-  )
-}
-
-// Update the MLModelPerformanceByRiskClass component
-const MLModelPerformanceByRiskClass = () => {
-  const models = ["Model A", "Model B", "Model C"]
-  const data = riskClasses.map((riskClass) => {
-    const entry: any = { name: riskClass }
-    models.forEach((model) => {
-      entry[`${model} SAR Alerts`] = Math.floor(Math.random() * 30) + 1
-      entry[`${model} Effective Alerts`] = Math.floor(Math.random() * 50) + 1
-      entry[`${model} Ineffective Alerts`] = Math.floor(Math.random() * 20) + 1
-    })
-    return entry
-  })
-
-  return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis label={{ value: "Alerts Count", angle: -90, position: "insideLeft" }} />
-        <Tooltip />
-        <Legend />
-        {models.map((model, index) => [
-          <Bar
-            key={`${model}-sar`}
-            dataKey={`${model} SAR Alerts`}
-            stackId={model}
-            fill={colors[index * 3]}
-            name={`${model} - SAR Alerts`}
-          />,
-          <Bar
-            key={`${model}-effective`}
-            dataKey={`${model} Effective Alerts`}
-            stackId={model}
-            fill={colors[index * 3 + 1]}
-            name={`${model} - Effective Alerts`}
-          />,
-          <Bar
-            key={`${model}-ineffective`}
-            dataKey={`${model} Ineffective Alerts`}
-            stackId={model}
-            fill={colors[index * 3 + 2]}
-            name={`${model} - Ineffective Alerts`}
-          />,
-        ])}
-      </BarChart>
-    </ResponsiveContainer>
-  )
-}
-
-const UpdatedModelPerformanceByRiskClass = () => {
-  const models = ["Model A", "Model B", "Model C"]
-  const data = riskClasses.flatMap((riskClass) =>
-    models.map((model) => ({
-      name: `${model} - ${riskClass}`,
-      "SAR Alerts": Math.floor(Math.random() * 30) + 1,
-      "Effective Alerts": Math.floor(Math.random() * 50) + 1,
-      "Ineffective Alerts": Math.floor(Math.random() * 20) + 1,
-    })),
-  )
-
-  return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="SAR Alerts" fill={colors[0]} />
-        <Bar dataKey="Effective Alerts" fill={colors[1]} />
-        <Bar dataKey="Ineffective Alerts" fill={colors[2]} />
-      </BarChart>
-    </ResponsiveContainer>
-  )
-}
-
-// Update the AboveLineTesting component
-const AboveLineTesting = () => {
-  const generateModelData = (versions: number) => {
-    return Array.from({ length: versions }, (_, i) => ({
-      version: `v${i + 1}`,
-      "SAR Alerts": Math.floor(Math.random() * 50) + 10,
-      "Effective Alerts": Math.floor(Math.random() * 100) + 20,
-      "Ineffective Alerts": Math.floor(Math.random() * 30) + 5,
-      accuracy: Math.random() * 0.2 + 0.7,
-      precision: Math.random() * 0.2 + 0.7,
-      recall: Math.random() * 0.2 + 0.7,
-    }))
-  }
-
-  const modelAData = generateModelData(5)
-  const modelBData = generateModelData(5)
-  const modelCData = generateModelData(5)
-
-  const alertTypes = ["SAR Alerts", "Effective Alerts", "Ineffective Alerts"]
-  const alertColors = ["#f59e0b", "#10b981", "#ef4444"] // amber, emerald, red
-
-  return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Model A - Above Line Testing</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={modelAData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis label={{ value: "Number of Alerts", angle: -90, position: "insideLeft" }} />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    const total = payload.reduce((sum, entry) => sum + (entry.value as number), 0)
-                    return (
-                      <div className="bg-background border rounded-lg p-3 shadow-lg">
-                        <p className="font-medium mb-2">{`Version ${label}`}</p>
-                        {payload.map((entry, index) => (
-                          <p key={index} style={{ color: entry.color }} className="text-sm">
-                            {`${entry.name}: ${entry.value} (${(((entry.value as number) / total) * 100).toFixed(1)}%)`}
-                          </p>
-                        ))}
-                        <p className="text-sm font-medium mt-2 border-t pt-2">{`Total: ${total}`}</p>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Legend />
-              {alertTypes.map((type, index) => (
-                <Bar key={type} dataKey={type} stackId="a" fill={alertColors[index]} name={type} />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={modelAData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis domain={[0, 1]} />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="accuracy" stroke="#2563eb" name="Accuracy" />
-              <Line type="monotone" dataKey="precision" stroke="#16a34a" name="Precision" />
-              <Line type="monotone" dataKey="recall" stroke="#9333ea" name="Recall" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Model B - Above Line Testing</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={modelBData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis label={{ value: "Number of Alerts", angle: -90, position: "insideLeft" }} />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    const total = payload.reduce((sum, entry) => sum + (entry.value as number), 0)
-                    return (
-                      <div className="bg-background border rounded-lg p-3 shadow-lg">
-                        <p className="font-medium mb-2">{`Version ${label}`}</p>
-                        {payload.map((entry, index) => (
-                          <p key={index} style={{ color: entry.color }} className="text-sm">
-                            {`${entry.name}: ${entry.value} (${(((entry.value as number) / total) * 100).toFixed(1)}%)`}
-                          </p>
-                        ))}
-                        <p className="text-sm font-medium mt-2 border-t pt-2">{`Total: ${total}`}</p>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Legend />
-              {alertTypes.map((type, index) => (
-                <Bar key={type} dataKey={type} stackId="a" fill={alertColors[index]} name={type} />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={modelBData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis domain={[0, 1]} />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="accuracy" stroke="#2563eb" name="Accuracy" />
-              <Line type="monotone" dataKey="precision" stroke="#16a34a" name="Precision" />
-              <Line type="monotone" dataKey="recall" stroke="#9333ea" name="Recall" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Model C - Above Line Testing</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={modelCData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis label={{ value: "Number of Alerts", angle: -90, position: "insideLeft" }} />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    const total = payload.reduce((sum, entry) => sum + (entry.value as number), 0)
-                    return (
-                      <div className="bg-background border rounded-lg p-3 shadow-lg">
-                        <p className="font-medium mb-2">{`Version ${label}`}</p>
-                        {payload.map((entry, index) => (
-                          <p key={index} style={{ color: entry.color }} className="text-sm">
-                            {`${entry.name}: ${entry.value} (${(((entry.value as number) / total) * 100).toFixed(1)}%)`}
-                          </p>
-                        ))}
-                        <p className="text-sm font-medium mt-2 border-t pt-2">{`Total: ${total}`}</p>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Legend />
-              {alertTypes.map((type, index) => (
-                <Bar key={type} dataKey={type} stackId="a" fill={alertColors[index]} name={type} />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={modelCData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis domain={[0, 1]} />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="accuracy" stroke="#2563eb" name="Accuracy" />
-              <Line type="monotone" dataKey="precision" stroke="#16a34a" name="Precision" />
-              <Line type="monotone" dataKey="recall" stroke="#9333ea" name="Recall" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
-
-// Update the BelowLineTesting component
-const BelowLineTesting = () => {
-  const generateModelData = (versions: number) => {
-    return Array.from({ length: versions }, (_, i) => ({
-      version: `v${i + 1}`,
-      "SAR Alerts": Math.floor(Math.random() * 50) + 10,
-      "Effective Alerts": Math.floor(Math.random() * 100) + 20,
-      "Ineffective Alerts": Math.floor(Math.random() * 30) + 5,
-      falsePositiveRate: Math.random() * 0.1,
-      falseNegativeRate: Math.random() * 0.1,
-      f1Score: Math.random() * 0.2 + 0.7,
-    }))
-  }
-
-  const modelAData = generateModelData(5)
-  const modelBData = generateModelData(5)
-  const modelCData = generateModelData(5)
-
-  const alertTypes = ["SAR Alerts", "Effective Alerts", "Ineffective Alerts"]
-  const alertColors = ["#f59e0b", "#10b981", "#ef4444"] // amber, emerald, red
-
-  return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Model A - Below Line Testing</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={modelAData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis label={{ value: "Number of Alerts", angle: -90, position: "insideLeft" }} />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    const total = payload.reduce((sum, entry) => sum + (entry.value as number), 0)
-                    return (
-                      <div className="bg-background border rounded-lg p-3 shadow-lg">
-                        <p className="font-medium mb-2">{`Version ${label}`}</p>
-                        {payload.map((entry, index) => (
-                          <p key={index} style={{ color: entry.color }} className="text-sm">
-                            {`${entry.name}: ${entry.value} (${(((entry.value as number) / total) * 100).toFixed(1)}%)`}
-                          </p>
-                        ))}
-                        <p className="text-sm font-medium mt-2 border-t pt-2">{`Total: ${total}`}</p>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Legend />
-              {alertTypes.map((type, index) => (
-                <Bar key={type} dataKey={type} stackId="a" fill={alertColors[index]} name={type} />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={modelAData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="falsePositiveRate" stroke="#ef4444" name="False Positive Rate" />
-              <Line type="monotone" dataKey="falseNegativeRate" stroke="#f59e0b" name="False Negative Rate" />
-              <Line type="monotone" dataKey="f1Score" stroke="#2563eb" name="F1 Score" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Model B - Below Line Testing</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={modelBData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis label={{ value: "Number of Alerts", angle: -90, position: "insideLeft" }} />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    const total = payload.reduce((sum, entry) => sum + (entry.value as number), 0)
-                    return (
-                      <div className="bg-background border rounded-lg p-3 shadow-lg">
-                        <p className="font-medium mb-2">{`Version ${label}`}</p>
-                        {payload.map((entry, index) => (
-                          <p key={index} style={{ color: entry.color }} className="text-sm">
-                            {`${entry.name}: ${entry.value} (${(((entry.value as number) / total) * 100).toFixed(1)}%)`}
-                          </p>
-                        ))}
-                        <p className="text-sm font-medium mt-2 border-t pt-2">{`Total: ${total}`}</p>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Legend />
-              {alertTypes.map((type, index) => (
-                <Bar key={type} dataKey={type} stackId="a" fill={alertColors[index]} name={type} />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={modelBData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="falsePositiveRate" stroke="#ef4444" name="False Positive Rate" />
-              <Line type="monotone" dataKey="falseNegativeRate" stroke="#f59e0b" name="False Negative Rate" />
-              <Line type="monotone" dataKey="f1Score" stroke="#2563eb" name="F1 Score" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Model C - Below Line Testing</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={modelCData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis label={{ value: "Number of Alerts", angle: -90, position: "insideLeft" }} />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    const total = payload.reduce((sum, entry) => sum + (entry.value as number), 0)
-                    return (
-                      <div className="bg-background border rounded-lg p-3 shadow-lg">
-                        <p className="font-medium mb-2">{`Version ${label}`}</p>
-                        {payload.map((entry, index) => (
-                          <p key={index} style={{ color: entry.color }} className="text-sm">
-                            {`${entry.name}: ${entry.value} (${(((entry.value as number) / total) * 100).toFixed(1)}%)`}
-                          </p>
-                        ))}
-                        <p className="text-sm font-medium mt-2 border-t pt-2">{`Total: ${total}`}</p>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Legend />
-              {alertTypes.map((type, index) => (
-                <Bar key={type} dataKey={type} stackId="a" fill={alertColors[index]} name={type} />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={modelCData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="version" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="falsePositiveRate" stroke="#ef4444" name="False Positive Rate" />
-              <Line type="monotone" dataKey="falseNegativeRate" stroke="#f59e0b" name="False Negative Rate" />
-              <Line type="monotone" dataKey="f1Score" stroke="#2563eb" name="F1 Score" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
+// --- STORYTELLING MOCK DATA ---
+const overviewData = [
+  { month: "Jan", totalAlerts: 4200, falsePositives: 3900, sars: 300 },
+  { month: "Feb", totalAlerts: 4500, falsePositives: 4150, sars: 350 },
+  { month: "Mar", totalAlerts: 5100, falsePositives: 4800, sars: 300 }, // Spike in FPs
+];
 
 export default function Dashboard() {
+  // State for our interactive BTL Threshold Tuning
+  const [velocityThreshold, setVelocityThreshold] = useState([30]);
+
+  // Dynamically calculate chart data based on the slider
+  // As threshold drops (fewer days), we catch more alerts, but false positives skyrocket
+  const dynamicBtlData = [
+    { 
+      parameter: "Cash Aggregation", 
+      currentAlerts: 5100, 
+      projectedAlerts: 5100 + ((30 - velocityThreshold[0]) * 150),
+      projectedSARs: 300 + ((30 - velocityThreshold[0]) * 5),
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-background">
-      <a href="#main-content" className="skip-to-content">
-        Skip to main content
-      </a>
-      <header className="border-b bg-card" role="banner">
-        <div className="container flex items-center h-14 gap-4">
-          <Button variant="ghost" size="icon" aria-label="Go back">
-            <ArrowLeft className="h-4 w-4" />
+    <div className="flex-1 space-y-4 p-8 pt-6">
+      <div className="flex items-center justify-between space-y-2">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight">Validation Workspace</h2>
+          <p className="text-muted-foreground">
+            Target: Retail Banking Cash Structuring Model v3.2
+          </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button variant="outline">
+            <Download className="mr-2 h-4 w-4" />
+            Export SR 11-7 Report
           </Button>
-          <h1 className="text-lg font-semibold">Dashboard</h1>
-          <span className="text-muted-foreground">Max K.</span>
-          <div className="ml-auto flex items-center gap-4">
-            <ThemeToggle />
-            <Button variant="ghost" size="icon" aria-label="Help">
-              <HelpCircle className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" aria-label="Notifications">
-              <Bell className="h-4 w-4" />
-            </Button>
-            <Avatar>
-              <AvatarImage
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-01-02%20at%2011.08.45%E2%80%AFAM-AffLYlH3E3alKZzLeiso0Ng8V9QC0h.png"
-                alt="User avatar"
-              />
-              <AvatarFallback>MK</AvatarFallback>
-            </Avatar>
+        </div>
+      </div>
+
+      <Tabs defaultValue="overview" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="overview">Model Overview</TabsTrigger>
+          <TabsTrigger value="btl">Below-the-Line (BTL) Tuning</TabsTrigger>
+          <TabsTrigger value="atl">Above-the-Line (ATL) Testing</TabsTrigger>
+        </TabsList>
+
+        {/* --- OVERVIEW TAB --- */}
+        <TabsContent value="overview" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Alerts (Q1)</CardTitle>
+                <Activity className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">13,800</div>
+                <p className="text-xs text-muted-foreground">+12% from last quarter</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">SAR Conversion Rate</CardTitle>
+                <CheckCircle2 className="h-4 w-4 text-green-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">6.8%</div>
+                <p className="text-xs text-muted-foreground">Below industry benchmark (8%)</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Data Integrity Score</CardTitle>
+                <AlertTriangle className="h-4 w-4 text-amber-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">98.2%</div>
+                <p className="text-xs text-muted-foreground">Warning: High NULL rate in Beneficiary fields</p>
+              </CardContent>
+            </Card>
           </div>
-        </div>
-      </header>
 
-      <main id="main-content" className="container py-6">
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold tracking-tight">Dashboard Overview</h2>
-          <p className="text-sm text-muted-foreground">Key metrics and visualizations</p>
-        </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Historical Alert Yield</CardTitle>
+              <CardDescription>Ratio of False Positives to Suspicious Activity Reports (SARs)</CardDescription>
+            </CardHeader>
+            <CardContent className="pl-2">
+              <ResponsiveContainer width="100%" height={350}>
+                <BarChart data={overviewData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="falsePositives" name="False Positives" fill="#94a3b8" stackId="a" />
+                  <Bar dataKey="sars" name="SARs Filed" fill="#0f172a" stackId="a" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-        <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="above-line">Above Line Testing</TabsTrigger>
-            <TabsTrigger value="below-line">Below Line Testing</TabsTrigger>
-          </TabsList>
+        {/* --- BELOW THE LINE TAB (INTERACTIVE) --- */}
+        <TabsContent value="btl" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <Card className="col-span-1">
+              <CardHeader>
+                <CardTitle>Parameter Tuning</CardTitle>
+                <CardDescription>Adjust threshold to simulate BTL capture rates.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between">
+                    <label className="text-sm font-medium leading-none">Velocity Threshold (Days)</label>
+                    <span className="text-sm font-bold">{velocityThreshold[0]} Days</span>
+                  </div>
+                  <Slider 
+                    defaultValue={[30]} 
+                    max={30} 
+                    min={7} 
+                    step={1}
+                    value={velocityThreshold}
+                    onValueChange={setVelocityThreshold}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Lowering the day count tightens the rule, forcing the engine to look for structuring over a shorter period.
+                  </p>
+                </div>
+                <Button className="w-full">Run BTL Simulation</Button>
+              </CardContent>
+            </Card>
 
-          <TabsContent value="overview">
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Parties by Risk Class</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <PartiesByRiskClass />
-                </CardContent>
-              </Card>
+            <Card className="col-span-2">
+              <CardHeader>
+                <CardTitle>Projected Impact</CardTitle>
+                <CardDescription>Estimated alerts based on {velocityThreshold[0]}-day threshold.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={dynamicBtlData}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <XAxis dataKey="parameter" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="currentAlerts" name="Current Baseline Alerts" fill="#cbd5e1" />
+                    <Bar dataKey="projectedAlerts" name="Projected New Alerts" fill="#64748b" />
+                    <Bar dataKey="projectedSARs" name="Projected Hidden SARs (BTL Catch)" fill="#22c55e" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+        
+        {/* --- ABOVE THE LINE TAB --- */}
+        <TabsContent value="atl" className="space-y-4">
+           <Card>
+              <CardHeader>
+                <CardTitle>Replication Testing (Accuracy)</CardTitle>
+                <CardDescription>Validating the bank&apos;s generated alerts against the raw extraction.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                 <div className="flex h-[300px] items-center justify-center rounded-md border border-dashed">
+                    <p className="text-sm text-muted-foreground">ATL Replication Engine Results will render here.</p>
+                 </div>
+              </CardContent>
+           </Card>
+        </TabsContent>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Alerts by Risk Class</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <AlertsByCaseChart title="Alerts" />
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Cases by Risk Class</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <AlertsByCaseChart title="Cases" />
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>SARs by Risk Class</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <SARsByRiskClass />
-                </CardContent>
-              </Card>
-
-              <Card className="md:col-span-2">
-                <CardHeader>
-                  <CardTitle>Model Performance by Risk Class</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ModelPerformanceByRiskClass />
-                </CardContent>
-              </Card>
-
-              <Card className="md:col-span-2">
-                <CardHeader>
-                  <CardTitle>Rule Performance by Risk Class</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <RulePerformanceByRiskClass />
-                </CardContent>
-              </Card>
-
-              <Card className="md:col-span-2">
-                <CardHeader>
-                  <CardTitle>ML Model Performance by Risk Class</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <MLModelPerformanceByRiskClass />
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="above-line">
-            <AboveLineTesting />
-          </TabsContent>
-
-          <TabsContent value="below-line">
-            <BelowLineTesting />
-          </TabsContent>
-        </Tabs>
-      </main>
+      </Tabs>
     </div>
-  )
+  );
 }
-

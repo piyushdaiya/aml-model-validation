@@ -1,7 +1,5 @@
-"use client"
-
 import { Suspense } from "react"
-import { useRouter, notFound } from "next/navigation"
+import { notFound } from "next/navigation"
 import {
   ArrowLeft,
   HelpCircle,
@@ -131,8 +129,19 @@ type NetworkData = {
   }[]
 }
 
+function AddressDisplay({ address }: { address: Address }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-sm">{address.street}</p>
+      <p className="text-sm">
+        {address.city}, {address.state} {address.zipCode}
+      </p>
+      <p className="text-sm">{address.country}</p>
+    </div>
+  )
+}
+
 async function PartyDetails({ id }: { id: string }) {
-  const router = useRouter()
   const { data: party, error } = await getPartyById(id)
 
   if (error) {
@@ -198,24 +207,14 @@ async function PartyDetails({ id }: { id: string }) {
     }
   }
 
-  function AddressDisplay({ address }: { address: Address }) {
-    return (
-      <div className="space-y-1">
-        <p className="text-sm">{address.street}</p>
-        <p className="text-sm">
-          {address.city}, {address.state} {address.zipCode}
-        </p>
-        <p className="text-sm">{address.country}</p>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b">
         <div className="container flex items-center h-14 gap-4">
-          <Button variant="ghost" size="icon" onClick={() => router.back()}>
-            <ArrowLeft className="h-4 w-4" />
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/parties">
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
           </Button>
           <h1 className="text-lg font-semibold">Party Details</h1>
           <span className="text-muted-foreground">Max K.</span>
@@ -713,8 +712,8 @@ async function PartyDetails({ id }: { id: string }) {
         </Tabs>
 
         <div className="mt-6">
-          <Button variant="outline" onClick={() => router.push("/parties")}>
-            Back to Party Management
+          <Button variant="outline" asChild>
+            <Link href="/parties">Back to Party Management</Link>
           </Button>
         </div>
       </main>
@@ -722,14 +721,14 @@ async function PartyDetails({ id }: { id: string }) {
   )
 }
 
-export default function PartyPage({ params }: { params: { id: string } }) {
-  const router = useRouter()
+export default async function PartyPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+
   return (
     <ErrorBoundary>
       <Suspense fallback={<Loading message="Loading party details..." />}>
-        <PartyDetails id={params.id} />
+        <PartyDetails id={id} />
       </Suspense>
     </ErrorBoundary>
   )
 }
-
