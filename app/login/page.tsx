@@ -66,12 +66,17 @@ export default function LoginPage() {
               </svg>
             </div>
           </div>
-          <CardTitle className="text-2xl text-center">AML Dashboard</CardTitle>
-          <CardDescription className="text-center">Enter your credentials to access your account</CardDescription>
+          <CardTitle className="text-2xl text-center">AML Model Validation Accelerator</CardTitle>
+          <CardDescription className="text-center">
+            Sign in to the consulting demo workspace, or register a demo account to preview the future application flow.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && <div className="p-3 text-sm bg-destructive/10 text-destructive rounded-md">{error}</div>}
+            <div className="rounded-md border border-border bg-muted/40 p-3 text-sm text-muted-foreground">
+              This demo keeps login and registration enabled to reflect the future product experience while the rest of the workflow remains mock-driven.
+            </div>
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <div className="relative">

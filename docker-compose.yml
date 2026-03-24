@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: aml-model-validation-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: aml_db
+      POSTGRES_USER: amluser
+      POSTGRES_PASSWORD: amlpassword
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U amluser -d aml_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DATABASE_URL: postgresql://amluser:amlpassword@postgres:5432/aml_db?schema=public
+        JWT_SECRET: docker-build-secret
+    container_name: aml-model-validation-web
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgresql://amluser:amlpassword@postgres:5432/aml_db?schema=public
+      JWT_SECRET: docker-build-secret
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+
+volumes:
+  postgres_data:

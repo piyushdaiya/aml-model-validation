@@ -2,13 +2,18 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { verifyAuth } from "./lib/auth"
 
-// Add paths that don't require authentication
-const publicPaths = ["/login", "/forgot-password"]
+const publicPaths = ["/login", "/forgot-password", "/register"]
 
-export async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Check if the path is public
+  // 1. ALWAYS allow API routes to pass through the middleware
+  // Otherwise, the middleware redirects the API call to the Login HTML page
+  if (pathname.startsWith("/api")) {
+    return NextResponse.next()
+  }
+
+  // 2. Allow static public pages
   if (publicPaths.includes(pathname)) {
     return NextResponse.next()
   }
@@ -23,6 +28,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 }
 

@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react"
 import ForceGraph2D from "react-force-graph-2d"
+import type { ForceGraphMethods } from "react-force-graph-2d"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
@@ -55,7 +56,7 @@ export function RelationshipGraph({ data }: { data: GraphData }) {
   const [highlightNodes, setHighlightNodes] = useState(new Set<string>())
   const [highlightLinks, setHighlightLinks] = useState(new Set<string>())
   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
-  const graphRef = useRef<any>()
+  const graphRef = useRef<ForceGraphMethods<Node, Link> | undefined>(undefined)
 
   const updateHighlight = useCallback(() => {
     setHighlightNodes(new Set(selectedNode ? [selectedNode.id] : []))
@@ -66,7 +67,6 @@ export function RelationshipGraph({ data }: { data: GraphData }) {
     setSelectedNode(node)
     if (graphRef.current) {
       const distance = 200
-      const distRatio = 1 + distance / Math.hypot(node.x!, node.y!)
       graphRef.current.centerAt(node.x, node.y, 1000)
       graphRef.current.zoom(2, 1000)
     }
@@ -162,14 +162,22 @@ export function RelationshipGraph({ data }: { data: GraphData }) {
               ctx.fillStyle = color
               ctx.fill()
             }}
-            linkLabel={(link: any) => link.type}
-            linkCanvasObject={(link: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
+            linkLabel={(link: Link) => link.type}
+            linkCanvasObject={(link: Link, ctx: CanvasRenderingContext2D, globalScale: number) => {
               const start = link.source
               const end = link.target
 
+              if (typeof start === "string" || typeof end === "string") {
+                return
+              }
+
               // Calculate the middle point of the link
-              const middleX = start.x + (end.x - start.x) / 2
-              const middleY = start.y + (end.y - start.y) / 2
+              const startX = start.x ?? 0
+              const startY = start.y ?? 0
+              const endX = end.x ?? 0
+              const endY = end.y ?? 0
+              const middleX = startX + (endX - startX) / 2
+              const middleY = startY + (endY - startY) / 2
 
               // Draw the relationship type text
               const label = link.type
@@ -200,7 +208,6 @@ export function RelationshipGraph({ data }: { data: GraphData }) {
               }
             }}
             backgroundColor="rgba(255, 255, 255, 0)"
-            d3Force={("link", null)}
             dagMode="radialout"
             dagLevelDistance={100}
           />
@@ -227,4 +234,3 @@ export function RelationshipGraph({ data }: { data: GraphData }) {
     </div>
   )
 }
-

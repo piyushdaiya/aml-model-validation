@@ -8,7 +8,7 @@ import {
   AlertTriangle,
   BarChart,
   MapPin,
-  Map,
+  Map as MapIcon,
   CreditCard,
   Users,
 } from "lucide-react"
@@ -24,6 +24,7 @@ import { RelationshipGraph } from "./components/relationship-graph"
 import ErrorBoundary from "@/components/error-boundary"
 import Loading from "@/components/loading"
 import { getPartyById } from "@/lib/actions"
+import type { PartyDetailsView } from "@/lib/actions"
 
 type Alert = {
   id: string
@@ -80,37 +81,7 @@ type PartyRelationship = {
 }
 
 // Update the Party type to include new fields
-type Party = {
-  id: string
-  name: string
-  type: "Individual" | "Business" | "Organization"
-  status: "Active" | "Inactive" | "Under Review"
-  riskLevel: "Low" | "Medium" | "High"
-  createdAt: string
-  description: string
-  primaryAddress: Address
-  secondaryAddresses?: Address[]
-  alerts?: Alert[]
-  sars?: SAR[]
-  relatedAccounts?: AccountRelationship[]
-  // New fields for Individual type
-  dateOfBirth?: string
-  countryOfCitizenship?: string
-  employmentStatus?: "Employed" | "Self-Employed" | "Unemployed" | "Retired" | "Student"
-  employerDetails?: {
-    name: string
-    industry: string
-    position: string
-    yearsEmployed: number
-  }
-  // Add cases field
-  cases?: Case[]
-  riskScore: number
-  employerAddress?: Address // for Individual type
-  dateOfIncorporation?: string // for Business type
-  placeOfIncorporation?: string // for Business type
-  relationships?: PartyRelationship[]
-}
+type Party = PartyDetailsView
 
 // Add this type definition with the existing types
 type NetworkData = {
@@ -153,11 +124,11 @@ async function PartyDetails({ id }: { id: string }) {
   }
 
   const getNetworkData = (party: Party): NetworkData => {
-    const nodes = new Set()
-    const links = new Set()
+    const nodes = new Map<string, NetworkData["nodes"][number]>()
+    const links = new Map<string, NetworkData["links"][number]>()
 
     // Add the current party as a node
-    nodes.add({
+    nodes.set(party.id, {
       id: party.id,
       name: party.name,
       type: "party",
@@ -168,13 +139,13 @@ async function PartyDetails({ id }: { id: string }) {
     // Add party relationships
     if (party.relationships) {
       party.relationships.forEach((rel) => {
-        nodes.add({
+        nodes.set(rel.partyId, {
           id: rel.partyId,
           name: rel.partyName,
           type: "party",
           status: rel.status,
         })
-        links.add({
+        links.set(`${party.id}:${rel.partyId}:${rel.type}`, {
           source: party.id,
           target: rel.partyId,
           type: rel.type,
@@ -186,14 +157,14 @@ async function PartyDetails({ id }: { id: string }) {
     // Add account relationships
     if (party.relatedAccounts) {
       party.relatedAccounts.forEach((acc) => {
-        nodes.add({
+        nodes.set(acc.accountId, {
           id: acc.accountId,
           name: acc.accountId,
           type: "account",
           subType: acc.accountType,
           status: acc.status,
         })
-        links.add({
+        links.set(`${party.id}:${acc.accountId}:${acc.relationship}`, {
           source: party.id,
           target: acc.accountId,
           type: acc.relationship,
@@ -202,8 +173,8 @@ async function PartyDetails({ id }: { id: string }) {
     }
 
     return {
-      nodes: Array.from(nodes),
-      links: Array.from(links),
+      nodes: Array.from(nodes.values()),
+      links: Array.from(links.values()),
     }
   }
 
@@ -424,7 +395,7 @@ async function PartyDetails({ id }: { id: string }) {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Map className="h-5 w-5" />
+                      <MapIcon className="h-5 w-5" />
                       Secondary Addresses
                     </CardTitle>
                   </CardHeader>
@@ -725,10 +696,8 @@ export default async function PartyPage({ params }: { params: Promise<{ id: stri
   const { id } = await params
 
   return (
-    <ErrorBoundary>
-      <Suspense fallback={<Loading message="Loading party details..." />}>
-        <PartyDetails id={id} />
-      </Suspense>
-    </ErrorBoundary>
+    <Suspense fallback={<Loading message="Loading party details..." />}>
+      <PartyDetails id={id} />
+    </Suspense>
   )
 }
