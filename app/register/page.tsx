@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Eye, EyeOff, Lock, User, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
@@ -54,7 +54,7 @@ export default function RegisterPage() {
         throw new Error(data.error || "Registration failed")
       }
 
-      router.push("/login")
+      router.push("/login?registered=1")
       router.refresh()
     } catch (err: any) {
       console.error("Fetch Error Detail:", err)
@@ -81,12 +81,17 @@ export default function RegisterPage() {
               </svg>
             </div>
           </div>
-          <CardTitle className="text-2xl text-center">Create an Account</CardTitle>
-          <CardDescription className="text-center">Sign up to access the AML Validation Platform</CardDescription>
+          <CardTitle className="text-2xl text-center">Create an account</CardTitle>
+          <CardDescription className="text-center">
+            Register for the AML Validation Reporting Portal to preview secure reporting, findings, and evidence access.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && <div className="p-3 text-sm bg-destructive/10 text-destructive rounded-md">{error}</div>}
+            <div className="rounded-md border border-border bg-muted/40 p-3 text-sm text-muted-foreground">
+              Passwords must be at least 8 characters. Registration depends on the local PostgreSQL demo database being available.
+            </div>
             
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -130,6 +135,7 @@ export default function RegisterPage() {
                   className="pl-10 pr-10"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  minLength={8}
                   required
                 />
                 <Button

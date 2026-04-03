@@ -164,7 +164,7 @@ function ModelsView() {
 
         <SectionCard
           title="Inventory Filters"
-          description="The same shared inventory now supports both traditional AML models and GenAI-assisted AML workflows, while preserving future API seams."
+          description="The shared portal inventory supports both traditional AML models and GenAI-assisted AML workflows while preserving future API and evidence-service seams."
           contentClassName="p-6"
         >
           <div className="grid gap-4 lg:grid-cols-5">
@@ -303,7 +303,7 @@ function ModelsView() {
               <PreviewDrawer model={previewModel} />
               <div className="mt-6 flex gap-3">
                 <Button asChild className="flex-1">
-                  <Link href={`/models/${previewModel.id}`}>Open workspace</Link>
+                  <Link href={`/models/${previewModel.id}`}>Open detail view</Link>
                 </Button>
                 <Button variant="outline" asChild className="flex-1">
                   <Link href={`/reports/${previewModel.id}`}>Open audit pack</Link>
@@ -321,10 +321,10 @@ export default function ModelsPage() {
   return (
     <DemoShell
       title="Validation Inventory"
-      description="Reusable consulting inventory for both traditional AML models and GenAI-enabled AML workflows, with clear seams for future search, APIs, and portfolio operations."
+      description="Secure reporting inventory for both traditional AML models and GenAI-enabled AML workflows, with clean seams for future search, APIs, and client-facing review operations."
       actions={
         <DemoPrimaryAction>
-          <span>Prepare Pipeline Review</span>
+          <span>Prepare Committee Review</span>
         </DemoPrimaryAction>
       }
     >

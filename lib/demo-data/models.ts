@@ -158,7 +158,7 @@ export const validationModels: ValidationModel[] = [
     groundingStatus: "Not Applicable",
     lastPromptSetUpdate: "2026-01-29",
     methodologyNote:
-      "Current phase positions the accelerator for a full validation workplan and evidence collection cadence.",
+      "Current phase positions the portal for a full reporting package and evidence collection cadence.",
     metrics: {
       precision: 0.63,
       recall: 0.91,
@@ -389,7 +389,8 @@ export const validationModels: ValidationModel[] = [
     humanInLoopRole:
       "Investigators verify source chronology, approve any escalation language, and confirm that omitted evidence is intentional.",
     providerModelName: "Anthropic Claude 3.7 Sonnet",
-    providerInfo: "Vendor model accessed through the client accelerator sandbox with retrieval constrained to approved investigation data stores.",
+    providerInfo:
+      "Vendor model is represented as institution-hosted with retrieval constrained to approved investigation data stores and surfaced here through secure reporting summaries.",
     promptPackVersion: "prompt-pack-2.0.1",
     promptVersionHistory: [
       {
@@ -479,7 +480,8 @@ export const validationModels: ValidationModel[] = [
     humanInLoopRole:
       "Escalation to policy owners is required for ambiguous guidance, outdated sources, or questions with control implications.",
     providerModelName: "Azure OpenAI GPT-4o",
-    providerInfo: "Prompted with retrieval over policy libraries, standards, and procedure repositories in the demo sandbox.",
+    providerInfo:
+      "Institution-hosted prompt flow uses retrieval over policy libraries, standards, and procedure repositories, with outputs summarized into the portal.",
     promptPackVersion: "prompt-pack-0.8.4",
     promptVersionHistory: [
       {
@@ -571,7 +573,8 @@ export const validationModels: ValidationModel[] = [
     humanInLoopRole:
       "Senior investigators must review every answer, validate supporting evidence, and confirm the escalation path before any workflow action.",
     providerModelName: "OpenAI o4-mini",
-    providerInfo: "Pilot configuration in the consulting accelerator sandbox with retrieval over private-bank case facts and approved procedures.",
+    providerInfo:
+      "Pilot configuration is represented as institution-hosted with retrieval over private-bank case facts and approved procedures, then summarized into the portal.",
     promptPackVersion: "prompt-pack-0.6.5",
     promptVersionHistory: [
       {
@@ -614,7 +617,7 @@ export const validationModels: ValidationModel[] = [
     escalationBehavior: "At Risk",
     privacyHandling: "Current redaction controls are not yet strong enough for unattended prompt expansion.",
     auditability: "Replay artifacts exist, but unsupported recommendation paths still need clearer audit annotations.",
-    deploymentRecommendation: "Hold deployment beyond a narrow validator sandbox until adversarial and redaction issues are remediated.",
+    deploymentRecommendation: "Hold deployment beyond a narrow institution-side pilot until adversarial and redaction issues are remediated.",
     residualRisks: [
       "Unsafe recommendation language under conflicting investigator prompts",
       "Sensitive-data redaction gaps",

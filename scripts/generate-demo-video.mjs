@@ -2,15 +2,20 @@ import { mkdir, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
+import { RAW_FRAME_DIR, SCENES, VIDEO_OUTPUTS, FRAME_SIZE } from "./demo-video/scenes.mjs"
+import { renderDemoAssets } from "./demo-video/render-assets.mjs"
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const repoRoot = path.join(__dirname, "..")
 
 const CHROME_DEBUG_BASE = process.env.CHROME_DEBUG_BASE ?? "http://127.0.0.1:9222"
 const APP_BASE_URL = process.env.APP_BASE_URL ?? "http://127.0.0.1:3000"
-const DEMO_USERNAME = process.env.DEMO_USERNAME ?? "video_undefined"
+const DEMO_USERNAME = process.env.DEMO_USERNAME ?? "video_demo"
+const DEMO_EMAIL = process.env.DEMO_EMAIL ?? `${DEMO_USERNAME}@example.com`
 const DEMO_PASSWORD = process.env.DEMO_PASSWORD ?? "video-pass-123"
 
-const outputDir = path.join(__dirname, "..", "public", "demo", "frames")
+const outputDir = path.join(repoRoot, RAW_FRAME_DIR)
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -61,7 +66,6 @@ class CdpClient {
 
   async command(method, params = {}) {
     const id = this.nextId++
-
     const response = new Promise((resolve, reject) => {
       this.pending.set(id, { resolve, reject })
     })
@@ -109,7 +113,8 @@ async function createTarget(url) {
   return response.json()
 }
 
-async function navigate(client, url) {
+async function navigate(client, target) {
+  const url = typeof target === "string" ? target : `data:text/html;charset=utf-8,${encodeURIComponent(target.html)}`
   const loadEvent = client.waitForEvent("Page.loadEventFired", 15000).catch(() => null)
   await client.command("Page.navigate", { url })
   await loadEvent
@@ -149,27 +154,26 @@ async function setDemoShellState(client, state) {
   `)
 }
 
-async function main() {
-  await mkdir(outputDir, { recursive: true })
+async function clickTab(client, label) {
+  await client.evaluate(`
+    (() => {
+      const tab = Array.from(document.querySelectorAll('[role="tab"]')).find((element) =>
+        element.textContent?.trim() === ${JSON.stringify(label)}
+      )
 
-  const target = await createTarget(`${APP_BASE_URL}/login`)
-  const client = new CdpClient(target.webSocketDebuggerUrl)
+      if (!tab) {
+        throw new Error('Unable to find tab: ' + ${JSON.stringify(label)})
+      }
 
-  await client.connect()
-  await client.command("Page.enable")
-  await client.command("Runtime.enable")
-  await client.command("Network.enable")
-  await client.command("Emulation.setDeviceMetricsOverride", {
-    width: 1440,
-    height: 900,
-    deviceScaleFactor: 1,
-    mobile: false,
-  })
+      tab.click()
+      return true
+    })()
+  `)
+}
 
+async function loginDemoUser(client) {
   await navigate(client, `${APP_BASE_URL}/login`)
-  await waitForText(client, "AML Model Validation Accelerator")
-  await capture(client, "01-login.png")
-
+  await waitForText(client, "AML Validation Reporting Portal")
   await client.evaluate(`
     (() => {
       const setInputValue = (element, value) => {
@@ -182,87 +186,110 @@ async function main() {
 
       setInputValue(document.getElementById("username"), ${JSON.stringify(DEMO_USERNAME)})
       setInputValue(document.getElementById("password"), ${JSON.stringify(DEMO_PASSWORD)})
-      document.querySelector("form").requestSubmit()
+      document.querySelector("form")?.requestSubmit()
       return true
     })()
   `)
-
   await waitForText(client, "Executive Dashboard")
-  await delay(1800)
+  await delay(1200)
+}
 
-  const scenes = [
-    {
-      file: "02-dashboard-compliance.png",
-      route: "/dashboard",
-      waitFor: "AI Workflow Validation Status",
-      state: {
-        selectedClientId: "northstar-bank",
-        personaId: "compliance-officer",
-        selectedModelId: "gai-001-alert-narrative-assistant",
-      },
+async function ensureDemoUser() {
+  const response = await fetch(`${APP_BASE_URL}/api/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    {
-      file: "03-dashboard-risk.png",
-      route: "/models",
-      waitFor: "Validation Inventory",
-      state: {
-        selectedClientId: "northstar-bank",
-        personaId: "model-owner",
-        selectedModelId: "gai-001-alert-narrative-assistant",
-      },
-    },
-    {
-      file: "04-models-owner.png",
-      route: "/models/gai-001-alert-narrative-assistant",
-      waitFor: "GenAI Workflow Overview",
-      state: {
-        selectedClientId: "northstar-bank",
-        personaId: "validator",
-        selectedModelId: "gai-001-alert-narrative-assistant",
-      },
-    },
-    {
-      file: "05-testing-validator.png",
-      route: "/testing",
-      waitFor: "Prompt / Control Panel",
-      state: {
-        selectedClientId: "atlas-private-bank",
-        personaId: "validator",
-        selectedModelId: "gai-004-disposition-recommendation-assistant",
-      },
-    },
-    {
-      file: "06-findings.png",
-      route: "/findings",
-      waitFor: "Findings & Remediation",
-      state: {
-        selectedClientId: "atlas-private-bank",
-        personaId: "compliance-officer",
-        selectedModelId: "gai-004-disposition-recommendation-assistant",
-      },
-    },
-    {
-      file: "07-report-preview.png",
-      route: "/reports/gai-004-disposition-recommendation-assistant",
-      waitFor: "Report Preview / Audit Pack",
-      state: {
-        selectedClientId: "atlas-private-bank",
-        personaId: "admin",
-        selectedModelId: "gai-004-disposition-recommendation-assistant",
-      },
-    },
-  ]
+    body: JSON.stringify({
+      email: DEMO_EMAIL,
+      username: DEMO_USERNAME,
+      password: DEMO_PASSWORD,
+    }),
+  })
 
-  for (const scene of scenes) {
-    await setDemoShellState(client, scene.state)
-    await navigate(client, `${APP_BASE_URL}${scene.route}`)
-    await waitForText(client, scene.waitFor)
-    await delay(1000)
-    await capture(client, scene.file)
+  if (response.ok) {
+    return
+  }
+
+  const payload = await response.json().catch(() => null)
+  if (payload?.error === "Username or Email already exists") {
+    return
+  }
+
+  throw new Error(`Unable to prepare demo user: ${response.status} ${JSON.stringify(payload)}`)
+}
+
+async function main() {
+  await mkdir(outputDir, { recursive: true })
+  await ensureDemoUser()
+
+  const target = await createTarget(`${APP_BASE_URL}/login`)
+  const client = new CdpClient(target.webSocketDebuggerUrl)
+
+  await client.connect()
+  await client.command("Page.enable")
+  await client.command("Runtime.enable")
+  await client.command("Network.enable")
+  await client.command("Emulation.setDeviceMetricsOverride", {
+    width: FRAME_SIZE.width,
+    height: FRAME_SIZE.height,
+    deviceScaleFactor: 1,
+    mobile: false,
+  })
+
+  let didLogin = false
+
+  for (const [index, scene] of SCENES.entries()) {
+    const isProtectedRoute = typeof scene.route === "string" && !["/login", "/register"].includes(scene.route)
+
+    if (isProtectedRoute && !didLogin) {
+      await loginDemoUser(client)
+      didLogin = true
+    }
+
+    if (scene.state) {
+      await setDemoShellState(client, scene.state)
+      await delay(300)
+    }
+
+    const targetUrl = typeof scene.route === "string" ? `${APP_BASE_URL}${scene.route}` : scene.route
+    await navigate(client, targetUrl)
+
+    const waitFor = typeof scene.route === "string" ? scene.waitForText : scene.route.waitForText
+    if (waitFor) {
+      await waitForText(client, waitFor)
+    }
+
+    if (scene.afterNavigate?.type === "click-tab") {
+      await clickTab(client, scene.afterNavigate.label)
+      await delay(300)
+      if (scene.afterNavigate.waitForText) {
+        await waitForText(client, scene.afterNavigate.waitForText)
+      }
+      await delay(600)
+    }
+
+    await capture(client, `${scene.id}.png`)
+
+    if (index === 1 && !didLogin) {
+      await loginDemoUser(client)
+      didLogin = true
+    }
   }
 
   await client.close()
+
+  await renderDemoAssets({
+    scenes: SCENES,
+    framesDir: outputDir,
+    outputMp4: path.join(repoRoot, VIDEO_OUTPUTS.mp4),
+    outputGif: path.join(repoRoot, VIDEO_OUTPUTS.gif),
+    cwd: repoRoot,
+  })
+
   console.log(`Generated frames in ${outputDir}`)
+  console.log(`Generated video at ${path.join(repoRoot, VIDEO_OUTPUTS.mp4)}`)
+  console.log(`Generated preview at ${path.join(repoRoot, VIDEO_OUTPUTS.gif)}`)
 }
 
 main().catch((error) => {

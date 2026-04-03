@@ -97,7 +97,46 @@ export interface PersonaDashboardConfig {
 }
 
 export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardConfig> = {
-  "compliance-officer": {
+  "consulting-partner": {
+    kpis: [
+      "ActiveClientEngagementsKpi",
+      "ModelsInScopeKpi",
+      "GenAIWorkflowsInScopeKpi",
+      "EvidencePacksReadyKpi",
+      "HighRiskFindingsKpi",
+      "HighRiskAiFindingsKpi",
+    ],
+    topWidgets: [
+      "ClientPortfolioWidget",
+      "EvidencePackReadinessWidget",
+      "AIWorkflowValidationStatusWidget",
+      "ModelStatusOverviewWidget",
+    ],
+    bottomWidgets: [
+      "FindingsSeverityWidget",
+      "GovernanceActionsWidget",
+      "DemoSystemActivityWidget",
+    ],
+    ctas: [
+      { label: "Review Portfolio Readiness", href: "/dashboard" },
+      { label: "Open Committee Pack", href: "/reports/:activeModelId" },
+      { label: "Review High-Risk Items", href: "/findings" },
+    ],
+    activityTypes: [
+      "report-generated",
+      "approval-completed",
+      "severe-finding-created",
+      "revalidation-triggered",
+      "configuration-updated",
+    ],
+    insightBanner: {
+      eyebrow: "Portfolio outlook",
+      title: "This secure reporting portal supports reusable consulting delivery across both traditional AML and GenAI assurance engagements.",
+      description:
+        "Use this view to show executive portfolio coverage, committee-pack readiness, high-risk client items, and where GenAI reporting can expand the consulting offering without moving execution outside the institution.",
+    },
+  },
+  "client-compliance-sponsor": {
     kpis: [
       "HighRiskFindingsKpi",
       "HighRiskAiFindingsKpi",
@@ -121,7 +160,7 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
     ctas: [
       { label: "Review Compliance Posture", href: "/dashboard" },
       { label: "Open Findings", href: "/findings" },
-      { label: "Generate OCC-Aligned Brief", href: "/reports/:activeModelId" },
+      { label: "Open Committee Pack", href: "/reports/:activeModelId" },
     ],
     activityTypes: [
       "report-generated",
@@ -132,12 +171,12 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
     ],
     insightBanner: {
       eyebrow: "Compliance posture",
-      title: "The current engagement is positioned for audit-friendly oversight across both traditional models and GenAI workflows.",
+      title: "The current engagement is positioned for secure audit-friendly oversight across both traditional models and GenAI workflows.",
       description:
-        "Use this view to demonstrate how the accelerator highlights overdue remediation, grounding coverage, human-review controls, and revalidation triggers without losing the regulator-facing narrative.",
+        "Use this view to demonstrate how the portal highlights overdue remediation, grounding coverage, human-review controls, and report readiness without losing the regulator-facing narrative.",
     },
   },
-  "risk-manager": {
+  "engagement-lead": {
     kpis: [
       "MaterialRiskIssuesKpi",
       "HighRiskAiFindingsKpi",
@@ -159,27 +198,27 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
       "RevalidationMilestonesWidget",
     ],
     ctas: [
-      { label: "Review Risk Exposure", href: "/dashboard" },
-      { label: "Open Testing Lab", href: "/testing" },
-      { label: "Review Remediation Priorities", href: "/findings" },
+      { label: "Review Engagement Posture", href: "/dashboard" },
+      { label: "Open Findings", href: "/findings" },
+      { label: "Open Client Pack", href: "/reports/:activeModelId" },
     ],
     activityTypes: [
       "severe-finding-created",
-      "stress-test-failed",
-      "adversarial-scenario-flagged",
+      "remediation-overdue",
+      "milestone-due",
       "benchmark-variance-detected",
+      "governance-comment-added",
     ],
     insightBanner: {
-      eyebrow: "Risk exposure",
-      title: "Material risk is now concentrated across both model performance and GenAI workflow control stability.",
+      eyebrow: "Client engagement",
+      title: "Material client issues are concentrated in findings severity, remediation sequencing, and committee-pack readiness.",
       description:
-        "This composition keeps failed scenarios, high-risk AI findings, and threshold or prompt-control exceptions at the center so leadership can prioritize the next decisions with a risk-first lens.",
+        "This composition keeps material findings, milestone pressure, and the client-facing reporting story in one place so the engagement lead can prepare a clear readout without implying workflow execution in the portal.",
     },
   },
-  "model-owner": {
+  "client-model-sponsor": {
     kpis: [
       "AssignedModelsKpi",
-      "GenAIWorkflowsInScopeKpi",
       "PendingDocumentationKpi",
       "AssignedActionsKpi",
       "ApprovalMilestonesKpi",
@@ -187,20 +226,20 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
       "GroundingCoverageKpi",
     ],
     topWidgets: [
-      "AIWorkflowValidationStatusWidget",
       "AssignedModelsWidget",
       "DocumentationChecklistWidget",
       "MilestonesWidget",
+      "AIWorkflowValidationStatusWidget",
     ],
     bottomWidgets: [
       "OwnerResponseFindingsWidget",
       "NotesCommentsWidget",
-      "ValidationStatusWidget",
+      "EvidencePackReadinessWidget",
     ],
     ctas: [
-      { label: "Update Model Evidence", href: "/models/:activeModelId" },
-      { label: "Review Assigned Actions", href: "/findings" },
-      { label: "Prepare for Approval Review", href: "/reports/:activeModelId" },
+      { label: "Review Response Items", href: "/findings" },
+      { label: "Open Evidence Summary", href: "/models/:activeModelId" },
+      { label: "Open Approval Pack", href: "/reports/:activeModelId" },
     ],
     activityTypes: [
       "document-requested",
@@ -209,53 +248,53 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
       "governance-comment-added",
     ],
     insightBanner: {
-      eyebrow: "Owner execution",
-      title: "The next approval outcome depends on documentation closure, prompt-version discipline, and timely owner responses.",
+      eyebrow: "Client response",
+      title: "The next approval outcome depends on documentation closure, prompt-version discipline, and timely sponsor responses.",
       description:
-        "This version of the shared dashboard shifts attention to assigned actions, milestone timing, workflow boundaries, and exactly what the model owner needs to prepare before governance review.",
+        "This view shifts attention to documentation gaps, approvals, workflow boundaries, and open response items so the client model sponsor can use the portal as a secure review surface rather than an execution environment.",
     },
   },
-  validator: {
+  "validation-lead": {
     kpis: [
       "PendingValidationReviewsKpi",
       "FailedTestRunsKpi",
       "DataQualityExceptionsKpi",
       "PromptTestScenariosFailedKpi",
-      "ExternalDataAlertsKpi",
       "EvidenceCompletenessKpi",
       "GroundingCoverageKpi",
+      "AuditTrailExceptionsKpi",
     ],
     topWidgets: [
-      "AIWorkflowValidationStatusWidget",
       "TestingQueueWidget",
       "DataQualityExceptionsWidget",
       "EvidenceCompletenessWidget",
+      "AIWorkflowValidationStatusWidget",
     ],
     bottomWidgets: [
       "ScenarioCoverageWidget",
       "ExternalSourceIntegrityWidget",
-      "CalibrationHistoryWidget",
+      "EvidencePackReadinessWidget",
     ],
     ctas: [
-      { label: "Continue Validation", href: "/models/:activeModelId" },
-      { label: "Open Testing Lab", href: "/testing" },
-      { label: "Review Evidence Gaps", href: "/reports/:activeModelId" },
+      { label: "Review Evidence Summary", href: "/models/:activeModelId" },
+      { label: "Open Testing Evidence", href: "/testing" },
+      { label: "Open Audit Pack", href: "/reports/:activeModelId" },
     ],
     activityTypes: [
       "test-run-completed",
       "evidence-missing",
       "data-quality-issue-detected",
       "external-data-source-failed",
-      "calibration-changed",
+      "audit-note-added",
     ],
     insightBanner: {
-      eyebrow: "Validation execution",
-      title: "Testing momentum is strongest when data exceptions, grounding failures, and answer-quality gaps stay visible together.",
+      eyebrow: "Evidence readiness",
+      title: "The portal is strongest when testing summaries, evidence completeness, and audit-trail quality stay visible together.",
       description:
-        "The validator composition puts queue health, source integrity, expected-versus-actual answer review, and evidence completeness on one surface so the workbench clearly supports future orchestration and replay.",
+        "The validation lead view puts evidence completeness, testing summaries, data-quality or grounding exceptions, and report-section readiness on one surface so the reporting package stays defensible and easy to review.",
     },
   },
-  admin: {
+  "platform-admin": {
     kpis: [
       "ActiveClientEngagementsKpi",
       "ModelsInScopeKpi",
@@ -277,8 +316,8 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
       "AccessOverviewWidget",
     ],
     ctas: [
-      { label: "Manage Demo Setup", href: "/settings/demo" },
-      { label: "Review Configuration Log", href: "/settings/demo" },
+      { label: "Manage Portal Setup", href: "/settings/demo" },
+      { label: "Review Audit Log", href: "/settings/demo" },
       { label: "Open Support Summary", href: "/dashboard" },
     ],
     activityTypes: [
@@ -289,10 +328,10 @@ export const dashboardConfigByPersona: Record<DemoPersonaId, PersonaDashboardCon
       "demo-health-warning",
     ],
     insightBanner: {
-      eyebrow: "Portfolio operations",
-      title: "The same demo shell can scale into a multi-client operating surface covering both AML models and GenAI workflows.",
+      eyebrow: "Portal operations",
+      title: "The same secure reporting portal can scale across engagements with lightweight setup, access, and audit controls.",
       description:
-        "For internal leadership, this view demonstrates portfolio coverage, provider and prompt-config visibility, and support monitoring without requiring a separate admin dashboard build.",
+        "For platform administration, this view demonstrates secure access posture, engagement setup, environment health, and audit-log visibility without turning the portal into an execution environment.",
     },
   },
 }

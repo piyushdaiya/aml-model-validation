@@ -145,7 +145,7 @@ function FindingsView() {
 
       <SectionCard
         title="Remediation Board"
-        description="Board-style sequencing for traditional-model and GenAI-workflow remediation under one shared workbench."
+        description="Board-style sequencing for traditional-model and GenAI-workflow remediation under one shared reporting portal."
         contentClassName="grid gap-4 p-6 xl:grid-cols-3"
       >
         {remediationColumns.map((column) => (

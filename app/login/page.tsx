@@ -1,8 +1,8 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { Suspense, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Eye, EyeOff, Lock, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,14 +12,17 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { ThemeToggle } from "../components/theme-toggle"
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const registered = searchParams.get("registered") === "1"
+  const passwordReset = searchParams.get("reset") === "1"
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,7 +36,10 @@ export default function LoginPage() {
         body: JSON.stringify({ username, password }),
       })
 
-      const data = await res.json()
+      const contentType = res.headers.get("content-type") ?? ""
+      const data = contentType.includes("application/json")
+        ? await res.json()
+        : { error: await res.text() }
 
       if (!res.ok) {
         throw new Error(data.error || "An error occurred")
@@ -66,16 +72,26 @@ export default function LoginPage() {
               </svg>
             </div>
           </div>
-          <CardTitle className="text-2xl text-center">AML Model Validation Accelerator</CardTitle>
+          <CardTitle className="text-2xl text-center">AML Validation Reporting Portal</CardTitle>
           <CardDescription className="text-center">
-            Sign in to the consulting demo workspace, or register a demo account to preview the future application flow.
+            Sign in to the secure consulting-hosted portal, or register a demo account to preview the future reporting and evidence access flow.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {registered ? (
+              <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">
+                Account created successfully. Sign in with your new credentials.
+              </div>
+            ) : null}
+            {passwordReset ? (
+              <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">
+                Password updated successfully. Sign in with your new password.
+              </div>
+            ) : null}
             {error && <div className="p-3 text-sm bg-destructive/10 text-destructive rounded-md">{error}</div>}
             <div className="rounded-md border border-border bg-muted/40 p-3 text-sm text-muted-foreground">
-              This demo keeps login and registration enabled to reflect the future product experience while the rest of the workflow remains mock-driven.
+              This demo keeps login and registration enabled to reflect the future product experience while reporting content remains mock-driven.
             </div>
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
@@ -163,5 +179,13 @@ export default function LoginPage() {
         </CardFooter>
       </Card>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <LoginForm />
+    </Suspense>
   )
 }

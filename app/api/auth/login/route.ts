@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client"
 import { prisma } from "@/lib/db"
 import { createToken } from "@/lib/auth"
 import { compare } from "bcryptjs"
@@ -60,6 +61,17 @@ export async function POST(req: Request) {
     })
   } catch (error) {
     console.error("Login error:", error)
+
+    if (error instanceof Prisma.PrismaClientInitializationError) {
+      return NextResponse.json(
+        {
+          error: "Database unavailable",
+          details: "Start PostgreSQL and confirm DATABASE_URL points to the running database.",
+        },
+        { status: 503 }
+      )
+    }
+
     return NextResponse.json({ error: "An error occurred during login" }, { status: 500 })
   }
 }

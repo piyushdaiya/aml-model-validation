@@ -169,7 +169,7 @@ function GenAITestingPanel({ workspace }: { workspace: TestingWorkspace }) {
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
         <SectionCard
           title="Prompt / Control Panel"
-          description="Mock controls mirror future orchestration inputs for retrieval, citation, review, and policy-boundary settings."
+          description="Mock controls mirror the future institution-side prompt, retrieval, review, and policy settings that will feed portal reporting."
           contentClassName="space-y-6 p-6"
         >
           {workspace.thresholdControls.map((control, index) => (
@@ -204,7 +204,7 @@ function GenAITestingPanel({ workspace }: { workspace: TestingWorkspace }) {
 
         <SectionCard
           title="Response Quality Visuals"
-          description="Shared testing lab surface now compares factuality, completeness, citation coverage, and safety for GenAI workflows."
+          description="Shared reporting surface comparing factuality, completeness, citation coverage, and safety for GenAI workflows."
           contentClassName="space-y-5 p-6"
         >
           <div className="h-[320px]">
@@ -248,7 +248,7 @@ function GenAITestingPanel({ workspace }: { workspace: TestingWorkspace }) {
       <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
         <SectionCard
           title="Scenario Output Comparison"
-          description="Expected-versus-actual answer review with prompt, retrieved evidence, and validator notes."
+          description="Expected-versus-actual answer review with prompt, retrieved evidence, and validation-lead notes."
           contentClassName="space-y-4 p-6"
         >
           {selectedScenario ? (
@@ -274,7 +274,7 @@ function GenAITestingPanel({ workspace }: { workspace: TestingWorkspace }) {
                 </div>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Validator notes</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Validation lead notes</p>
                 <p className="mt-3 text-sm leading-6 text-slate-700">{selectedScenario.validatorNotes}</p>
               </div>
             </>
@@ -356,9 +356,9 @@ function TestingView() {
 export default function TestingPage() {
   return (
     <DemoShell
-      title="Testing Lab"
-      description="Scenario-driven testing surface for both traditional AML validations and GenAI workflow controls, with direct seams to future orchestration and evidence services."
-      actions={<Button className="bg-slate-950 text-white hover:bg-slate-800">Run Scenario Simulation</Button>}
+      title="Testing Evidence"
+      description="Scenario-driven testing summary for both traditional AML validations and GenAI workflow controls, with clean seams to future institution-side evidence and evaluation feeds."
+      actions={<Button className="bg-slate-950 text-white hover:bg-slate-800">Refresh Testing Summary</Button>}
     >
       <TestingView />
     </DemoShell>

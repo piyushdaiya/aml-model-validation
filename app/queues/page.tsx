@@ -62,7 +62,7 @@ const users: User[] = [
   {
     id: "USR-002",
     name: "Jane Smith",
-    role: "Compliance Officer",
+    role: "Client Compliance Sponsor",
     avatarUrl: "/placeholder.svg?height=40&width=40",
     alerts: [
       {
@@ -242,4 +242,3 @@ export default function Queues() {
     </ErrorBoundary>
   )
 }
-

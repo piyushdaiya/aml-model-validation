@@ -17,6 +17,15 @@ export async function POST(req: Request) {
       )
     }
 
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(email)) {
+      return NextResponse.json(
+        { error: "Enter a valid email address" },
+        { status: 400 }
+      )
+    }
+
     if (password.length < 8) {
       return NextResponse.json(
         { error: "Password must be at least 8 characters long" },
@@ -58,6 +67,16 @@ export async function POST(req: Request) {
     )
   } catch (error) {
     console.error("CRITICAL REGISTRATION ERROR:", error)
+
+    if (error instanceof Prisma.PrismaClientInitializationError) {
+      return NextResponse.json(
+        {
+          error: "Database unavailable",
+          details: "Start PostgreSQL and confirm DATABASE_URL points to the running database.",
+        },
+        { status: 503 }
+      )
+    }
 
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       return NextResponse.json(

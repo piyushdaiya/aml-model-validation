@@ -64,7 +64,7 @@ export const reportPacks: ReportPack[] = [
         title: "Steering Committee Summary",
         status: "Ready",
         narrative:
-          "The accelerator package positions the client for a structured readout on model reasonability, segmentation, and governance enhancements.",
+          "The reporting package positions the client for a structured readout on model reasonability, segmentation, and governance enhancements.",
       },
       {
         id: "conceptual",
@@ -115,7 +115,7 @@ export const reportPacks: ReportPack[] = [
         title: "Evidence Gaps",
         status: "Under Review",
         narrative:
-          "Evidence persistence controls must be hardened before the workbench can support a full internal-audit or regulator replay standard.",
+          "Evidence persistence controls must be hardened before the portal can support a full internal-audit or regulator replay standard.",
       },
     ],
   },
@@ -175,7 +175,7 @@ export const reportPacks: ReportPack[] = [
         title: "Executive Summary",
         status: "Ready",
         narrative:
-          "This workflow demonstrates a credible GenAI use case for AML operations, with disciplined grounding and human-review controls already visible in the accelerator.",
+          "This workflow demonstrates a credible GenAI use case for AML operations, with disciplined grounding and human-review controls already visible in the portal.",
       },
       {
         id: "genai-validation",
@@ -212,7 +212,7 @@ export const reportPacks: ReportPack[] = [
         title: "Executive Summary",
         status: "Ready",
         narrative:
-          "The policy copilot shows the consulting accelerator can evaluate GenAI operations workflows, but stale-guidance and escalation weaknesses still limit deployment readiness.",
+          "The policy copilot shows the reporting portal can communicate GenAI operations assurance effectively, but stale-guidance and escalation weaknesses still limit deployment readiness.",
       },
       {
         id: "genai-validation",

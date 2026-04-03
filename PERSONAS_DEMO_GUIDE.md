@@ -2,9 +2,11 @@
 
 ## Purpose
 
-This guide explains how the shared AML Model Validation Workbench Demo behaves for each persona.
+This guide explains how the secure **AML Model Validation Reporting Portal Demo** behaves for each persona.
 
-This is a **demo experience**, not yet a production operating platform. Persona differences in this phase are primarily expressed through:
+This is a **reporting and evidence portal demo**, not yet a production operating platform for executing AML validation workflows.
+
+Persona differences in this phase are primarily expressed through:
 
 - dashboard emphasis
 - KPI ordering
@@ -12,20 +14,21 @@ This is a **demo experience**, not yet a production operating platform. Persona 
 - CTA labels and links
 - activity-feed prioritization
 - insight-banner messaging
+- reporting highlights for traditional and GenAI validation tracks
 
 The demo does **not** yet implement full RBAC or hard route restrictions.
 
-## How to Use This Guide During a Live Demo
+## How To Use This Guide During A Live Demo
 
 Use this sequence:
 
 1. Sign in through `/login` or create a user through `/register`.
 2. Open `/dashboard`.
-3. Change persona from the **Persona** selector in the shared shell.
-4. Keep the same route and client context while showing that the dashboard visibly changes.
-5. Explain that the same shared workbench supports both:
-   - traditional AML model validation
-   - GenAI-assisted AML workflow validation
+3. Change persona from the **Persona** selector.
+4. Keep the same route and client context while showing that the reporting emphasis visibly changes.
+5. Explain that the same portal supports both:
+   - traditional AML model validation reporting
+   - GenAI-assisted AML workflow validation reporting
 
 Current dashboard changes by persona:
 
@@ -35,263 +38,289 @@ Current dashboard changes by persona:
 - activity feed emphasis
 - insight banner text
 
-## Shared Expectations for All Personas
+## Shared Expectations For All Personas
 
 Every persona should expect:
 
-- the same overall application shell
-- the same core demo routes
+- the same secure application shell
+- the same core reporting routes
 - the same underlying synthetic data set
-- cross-navigation into inventory, workspace, testing, findings, and report views
-- a consulting-focused experience meant to demonstrate reusable AML validation delivery capability
-- one shared workbench covering both traditional AML models and GenAI workflows
-
-All persona views are intended to reinforce a consulting firm's ability to support multiple client engagements with a structured validation methodology.
+- cross-navigation into inventory, detail, testing summary, findings, and report views
+- a consulting-focused experience meant to demonstrate reusable AML validation reporting capability
+- one shared reporting portal covering both traditional AML models and GenAI workflows
+- reporting visibility rather than institution-side workflow execution
 
 ---
 
-## 1. Compliance Officer
+## 1. Consulting Partner
+
+### What this persona cares about
+
+- portfolio-level visibility across active client engagements
+- report readiness across engagements
+- high-risk issues requiring leadership attention
+- strategic extension into GenAI assurance for AML
+- repeatability of the consulting delivery model
+- monetizable potential of a secure reporting portal
+
+### What should change in the demo
+
+The dashboard should emphasize:
+
+- active client engagements
+- reports due or report readiness
+- high-risk findings across clients
+- GenAI workflow validation opportunities
+- delivery status across the portfolio
+- cross-engagement themes
+
+### Primary call-to-action expectations
+
+- Review Portfolio Status
+- View Executive Reporting
+- Review High-Risk Client Items
+
+### What this persona should expect from the demo
+
+The Consulting Partner should feel that the portal provides:
+
+- a credible consulting-practice asset
+- a secure way to present validation reporting without moving institution data
+- a scalable cross-client reporting model
+- a strong case for future productization
+
+### What to notice in the GenAI track
+
+- the consulting firm can extend beyond traditional AML model validation into AI assurance
+- GenAI reporting appears as part of the same portal rather than a separate product
+- GenAI findings and residual risk can be explained in a leadership-friendly way
+
+---
+
+## 2. Engagement Lead
+
+### What this persona cares about
+
+- material issues across the engagement
+- remediation progress
+- milestone readiness
+- severity and likelihood of findings
+- reporting completeness for committees and stakeholders
+- risk posture across both traditional and GenAI validation items
+
+### What should change in the demo
+
+The dashboard should emphasize:
+
+- material findings
+- severity heatmap
+- milestone and timeline status
+- remediation progress
+- revalidation triggers
+- high-risk GenAI control issues
+
+### Primary call-to-action expectations
+
+- Review Engagement Status
+- Review Remediation Priorities
+- Open Findings Summary
+
+### What this persona should expect from the demo
+
+The Engagement Lead should feel that the portal provides:
+
+- a single place to review reporting outputs across the engagement
+- a practical way to align consulting delivery with client governance expectations
+- clear prioritization of issues that need sponsor attention
+- a coherent story for traditional and GenAI validation scope
+
+### What to notice in the GenAI track
+
+- hallucination or unsafe-recommendation risks are surfaced as reportable control issues
+- GenAI testing outcomes are summarized in a way that supports steering decisions
+- GenAI findings can be tracked in the same remediation conversation as traditional findings
+
+---
+
+## 3. Validation Lead
+
+### What this persona cares about
+
+- evidence completeness
+- testing summaries
+- data-quality exceptions
+- external-data and grounding integrity signals
+- traceability from testing to findings
+- report-section readiness
+- quality of reporting for both traditional and GenAI items
+
+### What should change in the demo
+
+The dashboard should emphasize:
+
+- evidence completeness
+- testing summary queues
+- data-quality and grounding exceptions
+- report sections that need follow-up
+- scenario coverage
+- audit trail completeness
+
+### Primary call-to-action expectations
+
+- Continue Review
+- Review Evidence Gaps
+- Open Testing Summary
+
+### What this persona should expect from the demo
+
+The Validation Lead should feel that the portal provides:
+
+- a methodical way to review evidence and reporting outputs
+- visibility into whether reporting sections are ready for committee or client review
+- traceability between assumptions, tests, findings, and reporting language
+- a consulting-grade reporting structure for independent validation
+
+### What to notice in the GenAI track
+
+- expected-versus-actual answer comparisons are treated as reporting evidence
+- grounding failures and prompt/control failures are surfaced clearly
+- GenAI reporting can be reviewed with the same rigor as traditional validation outputs
+
+---
+
+## 4. Client Compliance Sponsor
 
 ### What this persona cares about
 
 - high-risk findings
 - overdue remediation actions
-- revalidation triggers
 - audit trail readiness
 - evidence-pack status
+- revalidation triggers
 - policy adherence and human-review controls for GenAI workflows
-- auditability of AI-enabled workflows
+- auditability of AI-enabled AML processes
 
 ### What should change in the demo
 
 The dashboard should emphasize:
 
-- high-risk findings and high-risk AI findings
+- high-risk findings
 - remediation timelines
-- revalidation triggers
-- grounding coverage and human-review exceptions
-- audit-trail and evidence-pack readiness
-- recent governance, approval, and audit-related events
-
-### What to notice in the GenAI track
-
-When a GenAI workflow is opened from the inventory, the Compliance Officer should focus on:
-
-- whether the workflow stays within approved usage boundaries
-- whether responses are grounded in approved sources
-- whether human review is explicitly required before operational action
-- whether policy adherence and escalation behavior are documented
-- whether findings show audit or control gaps that would matter in regulatory review
+- audit-readiness indicators
+- evidence-pack readiness
+- grounding coverage
+- human-review exceptions
+- recent governance and approval events
 
 ### Primary call-to-action expectations
 
 - Review Compliance Posture
 - Open Findings
-- Generate OCC-Aligned Brief
+- Generate Committee-Ready Summary
 
 ### What this persona should expect from the demo
 
-The Compliance Officer should feel that the demo provides:
+The Client Compliance Sponsor should feel that the portal provides:
 
-- strong visibility into control gaps across both validation tracks
-- an auditable view of validation status
-- confidence that remediation and review cycles can be tracked cleanly
-- a credible consulting-ready narrative for governance and regulatory conversations
-
----
-
-## 2. Risk Manager
-
-### What this persona cares about
-
-- severity and likelihood of findings
-- risk exposure across models and workflows
-- model performance drift
-- hallucination risk and unsafe recommendation risk
-- failed stress, adversarial, and prompt-based scenarios
-- threshold and prompt-control exceptions
-
-### What should change in the demo
-
-The dashboard should emphasize:
-
-- material risk issues
-- high-risk AI findings
-- performance and scenario-failure widgets
-- risk heatmap views
-- prompt / test failures
-- threshold sensitivity and revalidation milestones
+- confidence that reporting is structured for governance and oversight
+- visibility into control gaps across both validation tracks
+- a secure way to review consulting outputs without exposing institution-side workflow execution
+- a credible narrative for regulatory and audit discussions
 
 ### What to notice in the GenAI track
 
-When a GenAI workflow is opened from the inventory, the Risk Manager should focus on:
-
-- hallucination risk and unsupported recommendation behavior
-- failed adversarial or unsafe-recommendation scenarios
-- whether prompt or workflow controls materially reduce residual risk
-- whether the workflow can be piloted safely with human review
-- whether the findings justify remediation, restricted rollout, or pause
-
-### Primary call-to-action expectations
-
-- Review Risk Exposure
-- Open Testing Lab
-- Review Remediation Priorities
-
-### What this persona should expect from the demo
-
-The Risk Manager should feel that the demo provides:
-
-- a quick view of where model risk is increasing
-- a clear view of where GenAI workflow controls are not yet acceptable
-- evidence that testing rigor can be structured and repeatable
-- clear prioritization of which issues deserve immediate attention
+- policy-adherence issues are visible and understandable
+- human-review controls are explicitly called out
+- GenAI findings are presented in a governance-friendly way rather than as experimental AI output
 
 ---
 
-## 3. Model Owner
+## 5. Client Model Sponsor
 
 ### What this persona cares about
 
-- validation items assigned to them
 - documentation gaps
-- pending approval milestones
-- assigned actions
-- validation findings requiring response
-- workflow boundaries and prompt/version updates for GenAI items
+- pending approvals
+- evidence gaps
+- findings requiring response
+- workflow boundaries for GenAI items
+- prompt/version updates and reporting implications
+- readiness for governance review
 
 ### What should change in the demo
 
 The dashboard should emphasize:
 
-- assigned validation items
+- assigned validation reporting items
 - documentation checklist progress
 - upcoming milestones
-- findings requiring owner action
-- workflow-grounding posture
-- recent notes and comments relevant to their models or workflows
-
-### What to notice in the GenAI track
-
-When a GenAI workflow is opened from the inventory, the Model Owner should focus on:
-
-- intended use versus prohibited actions
-- prompt pack version and recent changes
-- documentation quality for workflow boundaries and human-in-the-loop controls
-- open remediation tasks tied to response quality or safety controls
-- what evidence is still needed before approval or pilot use
+- findings requiring sponsor response
+- workflow-boundary reporting
+- recent comments and requests
 
 ### Primary call-to-action expectations
 
-- Update Model Evidence
-- Review Assigned Actions
-- Prepare for Approval Review
+- Review Sponsor Actions
+- Update Supporting Evidence
+- Prepare For Governance Review
 
 ### What this persona should expect from the demo
 
-The Model Owner should feel that the demo provides:
+The Client Model Sponsor should feel that the portal provides:
 
-- clarity on what is expected from them
+- clarity on what needs to be reviewed or responded to
 - visibility into documentation and evidence gaps
-- an understandable path to move validation items through review and approval stages
-- a structured way to engage with validators and governance stakeholders
+- an understandable path from validation reporting to governance discussion
+- a practical mechanism for reviewing both traditional and GenAI reporting outputs
+
+### What to notice in the GenAI track
+
+- approved usage boundaries and prohibited actions are visible
+- prompt/version changes matter from a governance standpoint
+- GenAI workflow reporting is framed as controlled and reviewable rather than opaque
 
 ---
 
-## 4. Validator
+## 6. Platform Admin
 
 ### What this persona cares about
 
-- pending validation reviews
-- failed test runs
-- data quality exceptions
-- external data and grounding integrity alerts
-- evidence completeness
-- expected-versus-actual answer comparisons for GenAI workflows
-- prompt scenario failures and control gaps
+- secure portal access
+- active client engagement setup
+- reporting coverage across engagements
+- environment health
+- support issues
+- configuration changes
+- audit logs and operational visibility
 
 ### What should change in the demo
 
 The dashboard should emphasize:
-
-- testing queue
-- data-quality exceptions
-- evidence completeness
-- AI workflow validation status
-- source-integrity and grounding signals
-- scenario coverage and failed test detail
-
-### What to notice in the GenAI track
-
-When a GenAI workflow is opened from the inventory, the Validator should focus on:
-
-- grounding coverage and source freshness
-- prompt-by-prompt expected versus actual outputs
-- hallucination, refusal, and escalation behavior under controlled scenarios
-- whether the workflow preserves traceability from evidence to answer
-- whether findings and notes are sufficient to support an independent validation conclusion
-
-### Primary call-to-action expectations
-
-- Continue Validation
-- Open Testing Lab
-- Review Evidence Gaps
-
-### What this persona should expect from the demo
-
-The Validator should feel that the demo provides:
-
-- a methodical workspace for validation work
-- clear traceability between assumptions, evidence, and findings
-- visible support for traditional testing and GenAI prompt/control testing
-- a consulting-ready structure for independent validation execution
-
----
-
-## 5. Admin
-
-### What this persona cares about
 
 - active client engagements
-- validation items in scope
-- GenAI workflows in scope
-- demo/system status
-- support or configuration issues
-- persona and demo setup state
-- overall portfolio coverage
-
-### What should change in the demo
-
-The dashboard should emphasize:
-
-- client portfolio summary
-- validation-item status overview
-- AI workflow validation status
-- demo/system activity
+- reporting-item counts
+- portal/demo health
+- support queue
 - configuration changes
-- support queue and access overview
-
-### What to notice in the GenAI track
-
-When a GenAI workflow is opened from the inventory, the Admin should focus on:
-
-- provider or model configuration metadata
-- workflow/version setup state
-- environment or demo health implications
-- consistency of item types and route behavior across the workbench
-- whether the GenAI track looks operationally manageable as part of the same consulting accelerator
+- access and audit-log visibility
 
 ### Primary call-to-action expectations
 
-- Manage Demo Setup
+- Manage Portal Setup
 - Review Configuration Log
 - Open Support Summary
 
 ### What this persona should expect from the demo
 
-The Admin should feel that the demo provides:
+The Platform Admin should feel that the portal provides:
 
-- a manageable multi-client workbench view
-- visibility into portfolio and setup health
-- confidence that the experience can scale as a reusable consulting accelerator
-- a foundation for future configuration, provider, and governance controls
+- a manageable secure environment for consulting-hosted reporting
+- clarity on access, configuration, and setup posture
+- confidence that the reporting portal can scale across client engagements
+- a foundation for future platform controls
+
+### What to notice in the GenAI track
+
+- provider/model metadata and configuration history can be surfaced safely as reporting metadata
+- GenAI reporting items fit into the same portal administration model
+- the portal can support AI-assurance reporting without needing to run AI workflows directly

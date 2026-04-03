@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils"
 const navigation = [
   { href: "/dashboard", label: "Executive Dashboard", icon: LayoutDashboard },
   { href: "/models", label: "Validation Inventory", icon: Building2 },
-  { href: "/testing", label: "Testing Lab", icon: ClipboardCheck },
+  { href: "/testing", label: "Testing Evidence", icon: ClipboardCheck },
   { href: "/findings", label: "Findings & Remediation", icon: FileBadge2 },
 ]
 
@@ -38,10 +38,10 @@ function DemoShellInner({
       <div className="flex min-h-screen">
         <aside className="hidden w-[280px] flex-col border-r border-slate-200 bg-slate-950 text-slate-100 lg:flex">
           <div className="border-b border-slate-800 px-6 py-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Consulting Accelerator</p>
-            <h1 className="mt-3 text-xl font-semibold tracking-tight">AML Validation Workbench</h1>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Secure Reporting Portal</p>
+            <h1 className="mt-3 text-xl font-semibold tracking-tight">AML Validation Reporting Portal</h1>
             <p className="mt-2 text-sm leading-6 text-slate-400">
-              Reusable workbench for multi-client AML model and GenAI workflow validation, executive walkthroughs, and audit-ready outputs.
+              Consulting-hosted portal for multi-client reporting, evidence summaries, findings, remediation tracking, and committee-ready outputs across traditional AML and GenAI validation.
             </p>
           </div>
           <nav className="flex-1 space-y-2 px-4 py-6">

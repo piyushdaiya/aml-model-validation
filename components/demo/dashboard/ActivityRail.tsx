@@ -46,7 +46,7 @@ export function ActivityRail({
   return (
     <SectionCard
       title="Recent Activity"
-      description="Persona-prioritized activity feed from the shared mock operating trail."
+      description="Persona-prioritized activity feed from the shared reporting and audit trail."
       contentClassName="space-y-4 p-6"
     >
       <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">

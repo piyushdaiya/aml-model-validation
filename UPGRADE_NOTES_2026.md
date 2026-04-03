@@ -1,86 +1,160 @@
 # Upgrade Notes 2026
 
+## Purpose
+
+This document summarizes the 2026 refresh of the repository.
+
+The project was originally created in **2025** and has now been updated to support a stronger 2026 demo story, a more current technical baseline, and a clearer product positioning.
+
+## High-Level Outcome
+
+The repository has been refreshed from a 2025-era demo into a **2026 consulting-focused AML Model Validation Reporting Portal Demo**.
+
+The portal now presents:
+
+- secure reporting access
+- consulting-practice and client-stakeholder personas
+- traditional AML model validation reporting
+- GenAI-assisted AML workflow validation reporting
+- a clearer hosting and security story for consulting-led delivery
+
+## Key 2026 Improvements
+
+### 1. Library and dependency modernization
+
+The codebase has been refreshed toward a more current 2026 baseline.
+
+This refresh was intended to reduce incompatibilities from older package combinations and align the app to a more current framework/tooling setup.
+
+Areas of improvement included:
+
+- framework dependency refresh
+- UI library alignment
+- Prisma / database-client alignment
+- general package cleanup for a more stable install/build baseline
+
+### 2. Docker-based local environment
+
+The repository now supports a Docker-based local setup for both:
+
+- the web application
+- the PostgreSQL database
+
+This makes the demo easier to stand up consistently across environments and supports a more realistic consulting-demo workflow.
+
+### 3. Product positioning shift
+
+The repository is no longer primarily framed as a workbench that executes AML validation workflows in the consulting environment.
+
+It is now positioned as a:
+
+**secure AML Model Validation Reporting Portal**
+
+This matters because in real financial-institution settings:
+
+- data often cannot be moved outside the institution
+- execution of validation workflows often remains inside the client environment
+- consulting environments may only be allowed to host reporting, findings summaries, evidence references, and committee-ready outputs
+
+This shift makes the demo more realistic and more credible.
+
+### 4. Secure-access story
+
+Login and registration remain enabled intentionally.
+
+They are now part of the product story:
+
+- the consulting-hosted portal requires controlled access
+- the reporting surfaces are sensitive
+- approved consulting and client stakeholders need authenticated access to review outputs
+
+This is no longer described as incidental application plumbing. It is part of the secure reporting model.
+
+### 5. Persona redesign
+
+The persona model has been updated from workflow-oriented roles toward consulting-practice and client-reporting roles.
+
+The new persona set is:
+
+- Consulting Partner
+- Engagement Lead
+- Validation Lead
+- Client Compliance Sponsor
+- Client Model Sponsor
+- Platform Admin
+
+This aligns the portal to how a consulting-hosted reporting environment would actually be consumed.
+
+### 6. GenAI validation reporting added
+
+The demo now covers both:
+
+- traditional AML model validation reporting
+- GenAI-assisted AML workflow validation reporting
+
+This is implemented as a second validation/reporting track within the same shared portal rather than a separate product area.
+
+GenAI examples in scope include:
+
+- `GAI-001 Alert Narrative Assistant`
+- `GAI-002 AML Case Summarization Assistant`
+- `GAI-003 AML Policy Copilot`
+- `GAI-004 Disposition Recommendation Assistant`
+
+### 7. Shared reporting portal narrative
+
+The route structure remains shared:
+
+- `/dashboard`
+- `/models`
+- `/models/[modelId]`
+- `/testing`
+- `/findings`
+- `/reports/[modelId]`
+
+The portal presents both traditional and GenAI reporting through one shared experience.
+
+## Recommended Demo Reading Order
+
+For someone reviewing the repository, the best order is:
+
+1. `README.md`
+2. `PERSONAS_DEMO_GUIDE.md`
+3. `DEMO_WALKTHROUGH.md`
+
+## Technical Notes
+
+This refresh focused on making the demo more coherent and more presentation-ready.
+
+The repository should still be understood as:
+
+- demo-oriented
+- primarily mock-data driven in core reporting surfaces
+- suitable for stakeholder walkthroughs
+- a foundation for future productization rather than a finished production platform
+
+## What Still Remains Future Work
+
+The following areas remain future-phase work:
+
+- full RBAC enforcement
+- production report ingestion pipelines
+- production document management
+- full audit/evidence management
+- enterprise-grade operational controls
+
 ## Summary
 
-- Stabilized the npm dependency tree and regenerated `package-lock.json` without `--force` or `--legacy-peer-deps`.
-- Kept the app on Next.js 16 and moved React/React DOM plus React type packages to the React 19 line expected by the current Next release.
-- Kept Prisma on the latest Prisma 6 line instead of migrating to Prisma 7, to avoid the required generator output/import rewrite and keep the database layer changes minimal.
-- Replaced the removed `next lint` flow with ESLint CLI plus a flat `eslint.config.mjs`.
-- Repaired the auth routes and Prisma singleton path so `/api/auth/register` now returns JSON responses instead of crashing during module evaluation.
-- Updated the calendar wrapper for `react-day-picker` 9 and resolved the `date-fns` peer conflict cleanly.
+The 2026 refresh did more than update libraries.
 
-## Dependency Changes
+It also improved the business story:
 
-Notable direct package changes:
+- from a generic workbench
+- to a secure consulting-hosted reporting portal
 
-- `react`: `^18` -> `^19.2.0`
-- `react-dom`: `^18` -> `^19.2.0`
-- `@types/react`: `^18` -> `^19.2.2`
-- `@types/react-dom`: `^18` -> `^19.2.2`
-- `react-day-picker`: `8.10.1` -> `^9.11.1`
-- `prisma`: `^6.12.0` -> `^6.19.0`
-- `@prisma/client`: stayed on Prisma 6 and resolved to `6.19.2`
-- `vaul`: `^0.9.6` -> `^1.1.2`
-- `recharts`: `latest` -> `^3.4.0`
-- `react-force-graph-2d`: `latest` -> `^1.27.0`
-- `next-themes`: `latest` -> `^0.4.6`
-- `jose`: `latest` -> `^6.1.2`
-- `bcryptjs`: `latest` -> `^3.0.2`
-- Added `eslint` and `eslint-config-next`
-- Replaced `lint` script from `next lint` to `eslint .`
+And it expanded the functional story:
 
-## Compatibility Decisions
+- from traditional AML validation only
+- to traditional AML plus GenAI-assisted AML workflow validation reporting
 
-- Prisma 7 was intentionally not adopted.
-  Prisma 7 requires the client generator `output` field and import-path changes away from `@prisma/client`. This repo did not need that churn to become stable and working.
-- `react-day-picker` was upgraded instead of downgrading `date-fns`.
-  That resolved the install blocker while keeping the app on the newer `date-fns` line already present in the project.
-- Next 16 stays in place.
-  The repo was already on the Next 16 line, so the smallest safe move was framework alignment, not another major jump.
-- `next lint` was removed.
-  Next 16 removed that command, so linting now runs through ESLint directly.
-
-## Auth and Prisma Fixes
-
-- `lib/db.ts` now uses a clean Prisma singleton export pattern.
-- `app/api/auth/register/route.ts` now:
-  - trims and normalizes input
-  - validates required fields
-  - enforces a minimum password length
-  - checks for existing users safely
-  - hashes passwords with `bcryptjs`
-  - creates a user with schema-compatible fields
-  - returns structured JSON for success and failure paths
-- `app/api/auth/login/route.ts` and `app/api/auth/logout/route.ts` now use Next 16 async cookie APIs.
-- `app/register/page.tsx` now tolerates non-JSON responses defensively, but the route was also fixed so normal API failures return JSON.
-
-## Commands Run
-
-- `git checkout -b chore/full-dependency-upgrade-2026`
-- `npm install`
-- `npx prisma generate`
-- `npm run build`
-- `npx prisma db push`
-- `npm run lint`
-- `PORT=3001 npm start`
-- `curl -s -i -X POST http://localhost:3001/api/auth/register ...`
-- `npx tsc --noEmit --incremental false`
-
-## Verification Results
-
-- `npm install`: passed
-- `npx prisma generate`: passed
-- `npx prisma db push`: passed, database already in sync
-- `npm run build`: passed
-- `npm run lint`: passed
-- Live `/api/auth/register` verification:
-  - invalid payload returned JSON `400`
-  - valid payload returned JSON `201`
-
-## Remaining Manual Follow-ups
-
-- Strict TypeScript is still not clean across the UI layer.
-  `npx tsc --noEmit --incremental false` still reports many pre-existing type issues, so `next.config.mjs` still skips TypeScript build failures for now.
-- There is no test suite configured in `package.json`, and no test files were found to run.
-- Standardize on an LTS Node release in local/CI environments.
-  This work was validated in the current machine environment, but Next 16 officially targets Node 20.9+.
+That combination makes the repository more realistic, more differentiated, and better aligned to how a consulting firm could actually introduce a larger AML validation product/application effort.

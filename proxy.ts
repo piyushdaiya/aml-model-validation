@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { verifyAuth } from "./lib/auth"
 
-const publicPaths = ["/login", "/forgot-password", "/register"]
+const publicPaths = ["/login", "/forgot-password", "/register", "/reset-password"]
 
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -30,4 +30,3 @@ export default async function proxy(request: NextRequest) {
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 }
-

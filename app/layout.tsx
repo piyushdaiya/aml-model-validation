@@ -8,12 +8,12 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: {
-    default: "AML Model Validation Accelerator",
-    template: "%s | AML Model Validation Accelerator",
+    default: "AML Validation Reporting Portal",
+    template: "%s | AML Validation Reporting Portal",
   },
   description:
-    "Consulting-grade AML model validation accelerator for stakeholder demos, client previews, and future product buildout.",
-  applicationName: "AML Model Validation Accelerator",
+    "Consulting-hosted secure reporting portal for AML validation findings, evidence summaries, audit-ready outputs, and GenAI assurance reporting.",
+  applicationName: "AML Validation Reporting Portal",
   generator: "v0.dev",
 }
 

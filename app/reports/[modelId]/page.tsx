@@ -81,7 +81,7 @@ function ReportPreviewView() {
                     <div className="rounded-2xl bg-slate-50 p-5">
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Validation stance</p>
                       <p className="mt-3 text-sm leading-6 text-slate-700">
-                        The accelerator positions current observations in a way that is immediately useful for steering committees, internal audit, and future regulator dialogue.
+                        The portal presents current observations in a way that is immediately useful for steering committees, internal audit, and future regulator dialogue.
                       </p>
                     </div>
                     <div className="rounded-2xl bg-slate-50 p-5">

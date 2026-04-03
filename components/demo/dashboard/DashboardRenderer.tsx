@@ -56,7 +56,7 @@ import {
   isGenAIWorkflow,
   isTraditionalValidationModel,
 } from "@/lib/demo-data/models"
-import { getDemoPersona } from "@/lib/demo-data/personas"
+import { demoPersonas, getDemoPersona } from "@/lib/demo-data/personas"
 import { getReportPack } from "@/lib/demo-data/reports"
 import { getEvidenceForIds, getTestingWorkspace } from "@/lib/demo-data/testing"
 import type {
@@ -290,7 +290,7 @@ function getMetricCards(data: DashboardData): Record<DashboardKpiId, MetricCardC
     GenAIWorkflowsInScopeKpi: {
       title: "GenAI Workflows In Scope",
       value: `${portfolioScope.models.filter(isGenAIWorkflow).length}`,
-      subtitle: "Workflow validations now covered in the same shared accelerator.",
+      subtitle: "GenAI reporting and assurance items now covered in the same shared portal.",
       accent: "blue",
       icon: Sparkles,
     },
@@ -451,21 +451,21 @@ function getMetricCards(data: DashboardData): Record<DashboardKpiId, MetricCardC
     ActiveClientEngagementsKpi: {
       title: "Active Client Engagements",
       value: `${clientEngagements.length}`,
-      subtitle: "Portfolio-wide client engagements represented in the accelerator demo.",
+      subtitle: "Portfolio-wide client engagements represented in the secure portal demo.",
       accent: "blue",
       icon: BriefcaseBusiness,
     },
     ModelsInScopeKpi: {
       title: "Models In Scope",
       value: `${portfolioScope.models.length}`,
-      subtitle: "Total traditional models and workflows across the multi-client workbench.",
+      subtitle: "Total traditional models and workflows across the multi-client reporting portal.",
       accent: "slate",
       icon: FolderKanban,
     },
     ActiveUsersKpi: {
       title: "Active Users",
       value: `${uniquePeople.size}`,
-      subtitle: "Distinct mock stakeholders reflected across sponsors, owners, validators, and admins.",
+      subtitle: "Distinct mock stakeholders reflected across consulting and client portal personas.",
       accent: "emerald",
       icon: Users,
     },
@@ -473,8 +473,8 @@ function getMetricCards(data: DashboardData): Record<DashboardKpiId, MetricCardC
       title: "Demo Health",
       value: healthWarnings > 0 ? "Watch" : "Stable",
       subtitle: selectedActivity.some((item) => item.type === "demo-health-warning")
-        ? "A recent warning exists in the system activity trail and remains visible to admins."
-        : "No active health warnings are shown in the current mock operating trail.",
+        ? "A recent warning exists in the system activity trail and remains visible to platform admins."
+        : "No active health warnings are shown in the current mock portal activity trail.",
       accent: healthWarnings > 0 ? "amber" : "emerald",
       icon: Activity,
     },
@@ -895,7 +895,7 @@ function WidgetRenderer({
       )
     case "TestingQueueWidget":
       return (
-        <SectionCard title="Testing Queue" description="Next scenarios and workspaces requiring validator attention." contentClassName="p-6">
+        <SectionCard title="Testing Queue" description="Next scenarios and evidence summaries requiring validation-lead attention." contentClassName="p-6">
           <ListBlock
             items={data.clientScope.scenarios.slice(0, 4).map((scenario) => ({
               id: scenario.id,
@@ -1005,7 +1005,7 @@ function WidgetRenderer({
       )
     case "ClientPortfolioWidget":
       return (
-        <SectionCard title="Client Portfolio" description="Multi-client portfolio coverage in the consulting accelerator." contentClassName="p-6">
+        <SectionCard title="Client Portfolio" description="Multi-client portfolio coverage in the secure reporting portal." contentClassName="p-6">
           <ListBlock
             items={clientEngagements.map((engagement) => ({
               id: engagement.id,
@@ -1095,7 +1095,7 @@ function WidgetRenderer({
             </div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Persona options</p>
-              <p className="mt-2 text-sm font-medium text-slate-900">5 configured personas</p>
+              <p className="mt-2 text-sm font-medium text-slate-900">{demoPersonas.length} configured personas</p>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Visible client scope</p>
@@ -1149,7 +1149,7 @@ export function DashboardRenderer() {
     return {
       clientScope: getScope(clientModels, getFindingsForClient(activeClient.id), clientActivity),
       portfolioScope: getScope(portfolioModels, getFindings(), portfolioActivity),
-      selectedActivity: getSelectedActivity(personaId === "admin" ? portfolioActivity : clientActivity, config.activityTypes),
+      selectedActivity: getSelectedActivity(personaId === "platform-admin" || personaId === "consulting-partner" ? portfolioActivity : clientActivity, config.activityTypes),
       activeClientName: activeClient.clientName,
       activeModelName: activeModel.name,
       activeModelId: activeModel.id,

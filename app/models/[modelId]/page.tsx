@@ -399,7 +399,7 @@ function GenAIWorkspaceContent({ modelId }: { modelId: string }) {
       <TabsContent value="testing">
         <SectionCard
           title="Testing"
-          description="Prompt scenarios with expected-versus-actual outputs, retrieved evidence, and validator notes."
+          description="Prompt scenarios with expected-versus-actual outputs, retrieved evidence, and validation-lead notes."
           contentClassName="space-y-4 p-6"
         >
           {workspace?.scenarios.map((scenario) => (
@@ -443,7 +443,7 @@ function GenAIWorkspaceContent({ modelId }: { modelId: string }) {
                   <p className="mt-2 text-xl font-semibold text-slate-950">{scenario.reproducibilityScore}%</p>
                 </div>
                 <div className="rounded-xl bg-slate-50 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Validator notes</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Validation lead notes</p>
                   <p className="mt-2 text-sm leading-6 text-slate-700">{scenario.validatorNotes}</p>
                 </div>
               </div>
@@ -489,7 +489,7 @@ function ModelDetailView() {
   const { setSelectedModelId } = useDemoContext()
   const model = useMemo(() => getValidationModel(params.modelId), [params.modelId])
   const [notes, setNotes] = useState(
-    "Steering-committee angle: show one shared workbench for traditional AML models and GenAI-assisted AML workflows, with clear control boundaries and future API seams."
+    "Committee angle: show one secure portal for traditional AML models and GenAI-assisted AML workflows, with clear control boundaries, evidence summaries, and future API seams."
   )
 
   useEffect(() => {
@@ -563,19 +563,19 @@ function ModelDetailView() {
       <aside className="space-y-6">
         <SectionCard
           title="Notes & Actions"
-          description="Consulting-side workspace for steering messages and next actions."
+          description="Portal-side notes for steering messages, evidence follow-up, and next review actions."
           contentClassName="space-y-4 p-6"
         >
           <Textarea value={notes} onChange={(event) => setNotes(event.target.value)} className="min-h-[180px]" />
           <div className="grid gap-3">
             <Button className="justify-start bg-slate-950 text-white hover:bg-slate-800">
               <FilePenLine className="mr-2 h-4 w-4" />
-              {isTraditionalValidationModel(model) ? "Draft committee narrative" : "Draft AI control narrative"}
+              {isTraditionalValidationModel(model) ? "Draft committee summary" : "Draft AI control summary"}
             </Button>
             <Button variant="outline" className="justify-start" asChild>
               <Link href="/testing">
                 <ClipboardCheck className="mr-2 h-4 w-4" />
-                Open testing lab
+                Open testing evidence
               </Link>
             </Button>
             <Button variant="outline" className="justify-start" asChild>
@@ -597,8 +597,8 @@ export default function ModelDetailPage() {
 
   return (
     <DemoShell
-      title="Model Detail / Validation Workspace"
-      description="A shared consulting-led workspace for traditional AML models and GenAI-assisted AML workflows, with item-type-specific validation views under one route."
+      title="Validation Detail / Evidence Summary"
+      description="A shared reporting detail view for traditional AML models and GenAI-assisted AML workflows, with item-type-specific evidence and control summaries under one route."
       actions={
         model ? (
           <Button className="bg-slate-950 text-white hover:bg-slate-800" asChild>

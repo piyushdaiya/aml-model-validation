@@ -2,29 +2,34 @@ import type { DemoPersona, DemoPersonaId } from "@/lib/demo-data/types"
 
 export const demoPersonas: DemoPersona[] = [
   {
-    id: "compliance-officer",
-    label: "Compliance Officer",
-    description: "Compliance posture, overdue remediation, and audit-ready outputs across the active engagement.",
+    id: "consulting-partner",
+    label: "Consulting Partner",
+    description: "Executive portfolio visibility, report readiness, high-risk client items, and reusable offering positioning.",
   },
   {
-    id: "risk-manager",
-    label: "Risk Manager",
-    description: "Risk exposure, scenario failures, and material performance drift requiring prioritization.",
+    id: "engagement-lead",
+    label: "Engagement Lead",
+    description: "Material findings, remediation priorities, milestone readiness, and the client-facing reporting story.",
   },
   {
-    id: "model-owner",
-    label: "Model Owner",
-    description: "Assigned actions, documentation readiness, and milestones needed for governance review.",
+    id: "validation-lead",
+    label: "Validation Lead",
+    description: "Evidence completeness, testing summaries, report-section readiness, and audit-trail completeness.",
   },
   {
-    id: "validator",
-    label: "Validator",
-    description: "Testing queue, evidence gaps, data-quality exceptions, and calibration changes in progress.",
+    id: "client-compliance-sponsor",
+    label: "Client Compliance Sponsor",
+    description: "Compliance posture, audit readiness, high-risk findings, policy adherence, and human-review controls.",
   },
   {
-    id: "admin",
-    label: "Admin",
-    description: "Cross-client demo operations, configuration changes, support issues, and portfolio health.",
+    id: "client-model-sponsor",
+    label: "Client Model Sponsor",
+    description: "Documentation gaps, approvals, findings requiring response, workflow boundaries, and prompt/version changes.",
+  },
+  {
+    id: "platform-admin",
+    label: "Platform Admin",
+    description: "Secure access, engagement setup, environment health, support issues, and configuration and audit logs.",
   },
 ]
 

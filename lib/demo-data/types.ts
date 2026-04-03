@@ -1,9 +1,10 @@
 export type DemoPersonaId =
-  | "compliance-officer"
-  | "risk-manager"
-  | "model-owner"
-  | "validator"
-  | "admin"
+  | "consulting-partner"
+  | "engagement-lead"
+  | "validation-lead"
+  | "client-compliance-sponsor"
+  | "client-model-sponsor"
+  | "platform-admin"
 
 export type ActivityType =
   | "report-generated"

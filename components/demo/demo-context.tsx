@@ -9,6 +9,14 @@ import type { ClientEngagement, DemoPersonaId, ValidationModel } from "@/lib/dem
 
 const STORAGE_KEY = "aml-demo-shell-state"
 
+const legacyPersonaIdMap = {
+  "compliance-officer": "client-compliance-sponsor",
+  "risk-manager": "engagement-lead",
+  "model-owner": "client-model-sponsor",
+  validator: "validation-lead",
+  admin: "platform-admin",
+} as const
+
 type DemoShellState = {
   selectedClientId: string
   personaId: DemoPersonaId
@@ -31,7 +39,7 @@ const DemoContext = React.createContext<DemoContextValue | null>(null)
 
 export function DemoProvider({ children }: { children: React.ReactNode }) {
   const [selectedClientId, setSelectedClientIdState] = React.useState(defaultClient.id)
-  const [personaId, setPersonaIdState] = React.useState<DemoPersonaId>("compliance-officer")
+  const [personaId, setPersonaIdState] = React.useState<DemoPersonaId>("consulting-partner")
   const [selectedModelId, setSelectedModelIdState] = React.useState(defaultModel.id)
 
   React.useEffect(() => {
@@ -47,8 +55,13 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
         setSelectedClientIdState(parsed.selectedClientId)
       }
 
-      if (parsed.personaId && demoPersonas.some((persona) => persona.id === parsed.personaId)) {
-        setPersonaIdState(parsed.personaId)
+      const remappedPersonaId =
+        parsed.personaId && parsed.personaId in legacyPersonaIdMap
+          ? legacyPersonaIdMap[parsed.personaId as keyof typeof legacyPersonaIdMap]
+          : parsed.personaId
+
+      if (remappedPersonaId && demoPersonas.some((persona) => persona.id === remappedPersonaId)) {
+        setPersonaIdState(remappedPersonaId)
       }
 
       if (parsed.selectedModelId && validationModels.some((model) => model.id === parsed.selectedModelId)) {

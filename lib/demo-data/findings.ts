@@ -74,7 +74,7 @@ export const findings: Finding[] = [
     recommendation:
       "Expand the scoping extract before full testing begins so alert adjudication quality can be evaluated end-to-end.",
     summary:
-      "Current scoping dataset is good enough for demo positioning but not for a complete validation workbench.",
+      "Current scoping dataset is good enough for demo positioning but not for a complete audit-ready reporting package.",
     evidenceIds: ["ev-001"],
   },
   {
