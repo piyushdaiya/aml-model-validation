@@ -82,7 +82,7 @@ Keep the discussion focused on:
 
 ## Suggested Walkthrough Order
 
-### 1. Start At The Executive Dashboard
+### 1. Start at the Executive Dashboard
 
 **Route:** `/dashboard`
 
@@ -115,7 +115,7 @@ Keep the discussion focused on:
 
 ---
 
-### 2. Move To Validation Inventory
+### 2. Move to Validation Inventory
 
 **Route:** `/models`
 
@@ -202,11 +202,128 @@ Keep the discussion focused on:
 
 #### Good transition line
 
-> "Now let’s show how testing works when the same lab supports both traditional scenarios and GenAI prompt/control scenarios."
+> "Before we leave the inventory-driven flow, let’s stay on a GenAI workflow and walk through the dedicated AI assurance story end to end."
 
 ---
 
-### 4. Open The Testing Lab
+### 4. Dedicated GenAI Workflow Stop
+
+**Route sequence:** `/models` → `/models/[modelId]` → `/testing` → `/findings` → `/reports/[modelId]`
+
+This is the dedicated stop you should use to prove the GenAI track is real and not just mentioned at a high level.
+
+#### Suggested item
+
+Open one of these from inventory:
+
+- `GAI-001 Alert Narrative Assistant`
+- `GAI-002 AML Case Summarization Assistant`
+- `GAI-003 AML Policy Copilot`
+- `GAI-004 Disposition Recommendation Assistant`
+
+#### Step 4A. Grounding
+
+From the GenAI detail route, open **Data & Grounding**.
+
+What to point out:
+
+- approved data sources
+- grounding or retrieval coverage
+- source freshness
+- citation quality
+- human-review requirement
+
+What to say:
+
+> "This is where we show whether the workflow is actually grounded in approved AML content and whether the workflow can be trusted to stay within controlled evidence sources."
+
+#### Step 4B. Safety & Controls
+
+From the same GenAI detail route, open **Safety & Controls**.
+
+What to point out:
+
+- hallucination rate
+- refusal quality
+- escalation behavior
+- policy-boundary compliance
+- sensitive-data handling checks
+
+What to say:
+
+> "For GenAI in AML workflows, output quality is not enough. We also need evidence that the workflow behaves safely, escalates when appropriate, and does not cross policy boundaries."
+
+#### Step 4C. Testing
+
+Move to `/testing` with the same GenAI workflow selected.
+
+What to point out:
+
+- grounded Q&A test
+- hallucination trap
+- missing-context test
+- prompt-injection / instruction-conflict test
+- unsafe recommendation test
+- prompt
+- retrieved evidence
+- model answer
+- expected answer
+- pass/fail
+- validator notes
+
+What to say:
+
+> "This demonstrates that the testing lab is not limited to classical model thresholds. It can also challenge GenAI behavior, grounding, and control robustness."
+
+#### Step 4D. Findings
+
+Move to `/findings` and filter to the selected GenAI workflow.
+
+What to point out:
+
+- incomplete citation grounding
+- unsupported recommendation language
+- inconsistent escalation behavior
+- stale policy references
+- sensitive-data redaction gap
+
+What to say:
+
+> "This is where AI-control concerns become business and governance actions instead of just technical observations."
+
+#### Step 4E. Report Output
+
+Move to `/reports/[modelId]` for the same GenAI workflow.
+
+What to point out:
+
+- GenAI Workflow Validation section
+- intended use
+- workflow boundaries
+- grounding architecture
+- response quality testing
+- safety/control testing
+- human review controls
+- deployment recommendation
+- residual risks
+
+What to say:
+
+> "This makes the GenAI track look like a deliverable the consulting firm can actually take into governance, risk, or client discussions."
+
+#### What business message it supports
+
+- the demo can credibly cover AI assurance in AML workflows
+- GenAI validation is integrated into the same consulting workbench, not bolted on
+- the consulting practice can evolve into a broader AML + AI assurance offering
+
+#### Good transition line
+
+> "Now that we have shown the dedicated GenAI path, we can return to the shared testing and remediation story across both tracks."
+
+---
+
+### 5. Open the Testing Lab
 
 **Route:** `/testing`
 
@@ -253,7 +370,7 @@ Keep the discussion focused on:
 
 ---
 
-### 5. Move To Findings & Remediation
+### 6. Move to Findings & Remediation
 
 **Route:** `/findings`
 
@@ -292,7 +409,7 @@ Keep the discussion focused on:
 
 ---
 
-### 6. End With The Report Preview / Audit Pack
+### 7. End with the Report Preview / Audit Pack
 
 **Route:** `/reports/[modelId]`
 
@@ -325,7 +442,7 @@ Keep the discussion focused on:
 
 ---
 
-## Persona-Specific Emphasis During The Walkthrough
+## Persona-Specific Emphasis During the Walkthrough
 
 ### Compliance Officer
 Focus on:

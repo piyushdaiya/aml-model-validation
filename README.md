@@ -8,15 +8,16 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Radix UI](https://img.shields.io/badge/Radix_UI-Component_Primitives-161618?logo=radixui&logoColor=white)](https://www.radix-ui.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 ## Overview
 
 This repository contains a consulting-quality stakeholder demo for an **AML Model Validation Workbench**.
 
-The current demo is intentionally positioned as a **consulting accelerator**, not a bank’s internal production platform. It shows how one reusable workbench can support:
+The current demo is intentionally positioned as a **consulting accelerator**, not a bank's internal production platform. It shows how one reusable workbench can support:
 
 - traditional AML model validation
-- GenAI-assisted AML workflow validation used in AML operations
+- **GenAI-assisted AML workflow validation** used in AML operations
 - multi-client delivery by a consulting practice
 - persona-aware executive and working-level views
 - a clean path from mock-driven demo to full product build
@@ -35,11 +36,15 @@ The current demo is intentionally positioned as a **consulting accelerator**, no
 
 ## 2026 Refresh Highlights
 
-- dependency modernization for a stable current baseline
-- Docker-based local environment for both web app and database
+This repository was originally created in **2025** and recently refreshed for **2026**.
+
+Key improvements include:
+
+- updated libraries and framework dependencies for a stable 2026 baseline
+- Docker-based local setup for **both** the web application and the PostgreSQL database
 - persona-aware shared dashboard composition
 - one shared validation inventory, testing lab, findings surface, and report shell
-- dual-track demo support for traditional AML models and GenAI workflows
+- dual-track demo support for traditional AML models and GenAI-assisted AML workflows
 
 ## Quick Start
 
@@ -50,17 +55,7 @@ The demo is auth-protected. After startup, begin at:
 
 After authentication, the shared stakeholder demo shell starts at `/dashboard`.
 
-## Demo Video
-
-[![Demo Video Preview](./public/demo/demo-preview.gif)](./public/demo/demo-walkthrough.mp4)
-
-The short walkthrough now shows the shared workbench moving through the GenAI-enabled validation track within the existing demo routes.
-
-Download or open the short demo video here:
-
-- [demo-walkthrough.mp4](./public/demo/demo-walkthrough.mp4)
-
-## Install And Run The Demo
+## Install and Run the Demo
 
 Two run modes are supported.
 
@@ -88,7 +83,7 @@ Optional port overrides:
 WEB_PORT=3001 POSTGRES_PORT=5434 docker compose up --build
 ```
 
-### Option 2: Local npm Run
+### Option 2: Local npm run
 
 Use this when running the app directly on your machine.
 
@@ -115,7 +110,7 @@ Then open:
 - `http://localhost:3000/login`
 - or `http://localhost:3000/register`
 
-### Production-Style Verification
+### Production-style verification
 
 ```bash
 npm run build
@@ -144,7 +139,7 @@ The dual-track demo uses one shared route structure for both traditional AML mod
 
 There is no separate GenAI product area or `/ai-workflows` route.
 
-## What The Demo Is Meant To Show
+## What the Demo Is Meant to Show
 
 The demo emphasizes:
 
@@ -156,7 +151,7 @@ The demo emphasizes:
 - report and audit-pack preview suitable for consulting delivery conversations
 - persona-aware dashboard emphasis for different stakeholder groups
 
-## What The Demo Is Not Yet
+## What the Demo Is Not Yet
 
 This phase is not a full production system. It does not yet provide:
 
@@ -204,7 +199,8 @@ The current synthetic data set includes:
 5. Show how the dashboard changes by persona.
 6. Move to `/models` and show the shared inventory across traditional models and GenAI workflows.
 7. Open one traditional item and one GenAI item from `/models/[modelId]`.
-8. Move through `/testing`, `/findings`, and `/reports/[modelId]`.
+8. For the GenAI item, walk specifically through grounding, safety, testing, findings, and report output.
+9. Move through `/testing`, `/findings`, and `/reports/[modelId]`.
 
 ## Persona-Aware Experience
 
@@ -226,7 +222,7 @@ Persona switching changes:
 - activity feed emphasis
 - insight banner text
 
-The persona story now includes both traditional AML-model signals and GenAI workflow signals where relevant.
+The persona story includes both traditional AML-model signals and GenAI workflow signals where relevant.
 
 ## Demo Narrative
 
@@ -236,7 +232,7 @@ The recommended walkthrough is:
    Show portfolio-level status for both traditional AML validation and GenAI workflow validation.
 
 2. **Validation Inventory**  
-   Show the consulting firm’s shared view of in-scope validation items across clients.
+   Show the consulting firm's shared view of in-scope validation items across clients.
 
 3. **Model Detail / Validation Workspace**  
    Show that one detail route can support traditional tabs and GenAI-specific tabs without fragmenting the experience.
@@ -266,3 +262,8 @@ This demo is intended for:
 - [Persona Demo Guide](./PERSONAS_DEMO_GUIDE.md)
 - [Demo Walkthrough](./DEMO_WALKTHROUGH.md)
 - [Upgrade Notes 2026](./UPGRADE_NOTES_2026.md)
+- [MIT License](./LICENSE)
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE). Copyright (c) 2026 Piyush Daiya.

@@ -15,7 +15,7 @@ This is a **demo experience**, not yet a production operating platform. Persona 
 
 The demo does **not** yet implement full RBAC or hard route restrictions.
 
-## How To Use This Guide During A Live Demo
+## How to Use This Guide During a Live Demo
 
 Use this sequence:
 
@@ -35,7 +35,7 @@ Current dashboard changes by persona:
 - activity feed emphasis
 - insight banner text
 
-## Shared Expectations For All Personas
+## Shared Expectations for All Personas
 
 Every persona should expect:
 
@@ -46,7 +46,7 @@ Every persona should expect:
 - a consulting-focused experience meant to demonstrate reusable AML validation delivery capability
 - one shared workbench covering both traditional AML models and GenAI workflows
 
-All persona views are intended to reinforce a consulting firm’s ability to support multiple client engagements with a structured validation methodology.
+All persona views are intended to reinforce a consulting firm's ability to support multiple client engagements with a structured validation methodology.
 
 ---
 
@@ -72,6 +72,16 @@ The dashboard should emphasize:
 - grounding coverage and human-review exceptions
 - audit-trail and evidence-pack readiness
 - recent governance, approval, and audit-related events
+
+### What to notice in the GenAI track
+
+When a GenAI workflow is opened from the inventory, the Compliance Officer should focus on:
+
+- whether the workflow stays within approved usage boundaries
+- whether responses are grounded in approved sources
+- whether human review is explicitly required before operational action
+- whether policy adherence and escalation behavior are documented
+- whether findings show audit or control gaps that would matter in regulatory review
 
 ### Primary call-to-action expectations
 
@@ -112,6 +122,16 @@ The dashboard should emphasize:
 - prompt / test failures
 - threshold sensitivity and revalidation milestones
 
+### What to notice in the GenAI track
+
+When a GenAI workflow is opened from the inventory, the Risk Manager should focus on:
+
+- hallucination risk and unsupported recommendation behavior
+- failed adversarial or unsafe-recommendation scenarios
+- whether prompt or workflow controls materially reduce residual risk
+- whether the workflow can be piloted safely with human review
+- whether the findings justify remediation, restricted rollout, or pause
+
 ### Primary call-to-action expectations
 
 - Review Risk Exposure
@@ -150,6 +170,16 @@ The dashboard should emphasize:
 - findings requiring owner action
 - workflow-grounding posture
 - recent notes and comments relevant to their models or workflows
+
+### What to notice in the GenAI track
+
+When a GenAI workflow is opened from the inventory, the Model Owner should focus on:
+
+- intended use versus prohibited actions
+- prompt pack version and recent changes
+- documentation quality for workflow boundaries and human-in-the-loop controls
+- open remediation tasks tied to response quality or safety controls
+- what evidence is still needed before approval or pilot use
 
 ### Primary call-to-action expectations
 
@@ -191,6 +221,16 @@ The dashboard should emphasize:
 - source-integrity and grounding signals
 - scenario coverage and failed test detail
 
+### What to notice in the GenAI track
+
+When a GenAI workflow is opened from the inventory, the Validator should focus on:
+
+- grounding coverage and source freshness
+- prompt-by-prompt expected versus actual outputs
+- hallucination, refusal, and escalation behavior under controlled scenarios
+- whether the workflow preserves traceability from evidence to answer
+- whether findings and notes are sufficient to support an independent validation conclusion
+
 ### Primary call-to-action expectations
 
 - Continue Validation
@@ -230,6 +270,16 @@ The dashboard should emphasize:
 - demo/system activity
 - configuration changes
 - support queue and access overview
+
+### What to notice in the GenAI track
+
+When a GenAI workflow is opened from the inventory, the Admin should focus on:
+
+- provider or model configuration metadata
+- workflow/version setup state
+- environment or demo health implications
+- consistency of item types and route behavior across the workbench
+- whether the GenAI track looks operationally manageable as part of the same consulting accelerator
 
 ### Primary call-to-action expectations
 
