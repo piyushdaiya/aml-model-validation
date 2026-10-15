@@ -298,6 +298,10 @@ This demo is intended for:
 - client sponsors and decision-makers
 - internal product sponsors
 
+## Productization roadmap (P1 scope)
+
+The [product foundation documents](./docs/product/README.md) define the **proposed** P1 MVP for **one consulting firm**, with client- and engagement-isolated **traditional AML model validation reporting**. The production P1 scope excludes GenAI and validation execution. This repository's current **demo** intentionally retains GenAI examples; the documents do not claim the production MVP has been implemented.
+
 ## License
 
 Licensed under the [MIT License](./LICENSE).
